@@ -129,11 +129,11 @@ function getPackSVG(color1, color2, accent) {
     </svg>`;
 }
 const PACK_TIERS = {
-    bronze: { name: 'Bronze Pack', distance: 500, color: '#cd7f32', players: 1, rarities: ['bronze'], icon: getPackSVG('#cd7f32', '#8B5A2B', '#FFE4C4') },
-    silver: { name: 'Silver Pack', distance: 1000, color: '#c0c0c0', players: 1, rarities: ['bronze', 'silver'], icon: getPackSVG('#d0d0d0', '#808080', '#fff') },
-    gold: { name: 'Gold Pack', distance: 1500, color: '#ffd700', players: 2, rarities: ['silver', 'gold'], icon: getPackSVG('#ffd700', '#B8860B', '#fff') },
-    premium: { name: 'Premium Pack', distance: 2000, color: '#ff6600', players: 2, rarities: ['gold', 'special'], icon: getPackSVG('#ff6600', '#cc3300', '#FFD700') },
-    ultimate: { name: 'Ultimate Pack', distance: 2500, color: '#ff00ff', players: 3, rarities: ['gold', 'special', 'icon'], icon: getPackSVG('#ff00ff', '#8800aa', '#00ffff') }
+    bronze: { name: 'Bronze Pack', distance: 500, color: '#cd7f32', players: 1, rarities: ['bronze'], icon: getPackSVG('#cd7f32', '#8B5A2B', '#FFE4C4'), emoji: '🟤' },
+    silver: { name: 'Silver Pack', distance: 1000, color: '#c0c0c0', players: 1, rarities: ['bronze', 'silver'], icon: getPackSVG('#d0d0d0', '#808080', '#fff'), emoji: '⬜' },
+    gold: { name: 'Gold Pack', distance: 1500, color: '#ffd700', players: 2, rarities: ['silver', 'gold'], icon: getPackSVG('#ffd700', '#B8860B', '#fff'), emoji: '🟡' },
+    premium: { name: 'Premium Pack', distance: 2000, color: '#ff6600', players: 2, rarities: ['gold', 'special'], icon: getPackSVG('#ff6600', '#cc3300', '#FFD700'), emoji: '🟠' },
+    ultimate: { name: 'Ultimate Pack', distance: 2500, color: '#ff00ff', players: 3, rarities: ['gold', 'special', 'icon'], icon: getPackSVG('#ff00ff', '#8800aa', '#00ffff'), emoji: '🟣' }
 };
 
 const defaultState = { 
@@ -506,7 +506,7 @@ function hatchPack(slotIndex) {
     updateObjectives('packs', 1);
     saveGame();
     
-    showToast(`${tier.icon} ${tier.name} hatched!`);
+    showToast(`${tier.emoji} ${tier.name} hatched!`);
     playAudio('pack');
     startPackSequence(players);
     checkWardrobeUnlocks();
@@ -527,7 +527,7 @@ function addPackToStorage(tier) {
     state.packStorage.push(pack);
     saveGame();
     updateIncubatorUI();
-    showToast(`${PACK_TIERS[tier].icon} ${PACK_TIERS[tier].name} added to storage!`);
+    showToast(`${PACK_TIERS[tier].emoji} ${PACK_TIERS[tier].name} added to storage!`);
     return true;
 }
 
@@ -553,7 +553,7 @@ function equipPackToIncubator(packId) {
     
     saveGame();
     updateIncubatorUI();
-    showToast(`${tier.icon} Started walking ${tier.name}!`);
+    showToast(`${tier.emoji} Started walking ${tier.name}!`);
 }
 
 function updateIncubatorUI() {

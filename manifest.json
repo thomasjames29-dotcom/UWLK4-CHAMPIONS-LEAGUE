@@ -1,10 +1,11 @@
 {
-  "name": "PitchWalker",
+  "name": "PitchWalker Ultimate",
   "short_name": "PitchWalker",
-  "start_url": ".",
+  "description": "Pokemon GO meets FIFA Ultimate Team - Walk to collect players, build your squad, complete SBCs, trade on the market",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#0f3460",
+  "background_color": "#0a0f0a",
+  "theme_color": "#ffd700",
   "orientation": "portrait",
   "icons": [
     {
@@ -17,5 +18,6 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "categories": ["games", "sports"]
 }

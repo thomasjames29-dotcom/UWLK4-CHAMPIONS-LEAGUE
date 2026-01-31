@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>PitchWalker v88</title>
+    <title>PitchWalker - Ultimate Edition</title>
     <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0d1b0e">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/53/53283.png">
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="crt">
 
     <div id="game-toast">NOTIFICATION</div>
-    
     <div id="gps-status" class="status-dot"></div>
 
     <div id="pack-overlay" class="pack-overlay" style="display:none;" onclick="revealPack()">
@@ -29,27 +28,33 @@
 
     <div id="match-view" class="view-container full-panel" style="background:#000; z-index:15000;">
         <div class="scoreboard">
+            <div class="team-label">YOU</div>
             <div class="score-box"><span id="score-home">0</span> - <span id="score-away">0</span></div>
-            <div class="timer-box" id="match-time">00:00</div>
+            <div class="team-label">OPP</div>
         </div>
-        <div class="pitch-container" id="match-pitch" style="height:50vh; margin-top:20px;">
-            <div id="match-ball" class="match-ball">⚽</div>
+        <div class="timer-box" id="match-time">0'</div>
+        <div class="pitch-visual">
+            <div class="pitch-field">
+                <div class="pitch-center-circle"></div>
+                <div class="pitch-center-line"></div>
+            </div>
         </div>
         <div class="commentary-box" id="match-comm">MATCH READY...</div>
-        <button id="match-end-btn" class="btn btn-red" style="display:none; margin:20px;" onclick="endMatch()">EXIT MATCH</button>
+        <button id="match-end-btn" class="btn btn-green" style="display:none; margin:20px;" onclick="endMatch()">EXIT MATCH</button>
     </div>
 
     <div id="intro-layer">
         <div class="title-container" id="title-box">
-            <div style="font-size:80px; margin-bottom:10px;">⚽</div>
-            <h1 style="font-size:60px; color:gold; margin:0; line-height:0.9;">PITCH<br><span style="font-size:24px; color:white;">WALKER</span></h1>
-            <div style="color:#888; font-size:14px; margin-top:15px;">v88.0 RESTORED</div>
-            <button class="btn btn-green" style="margin-top:30px;" onclick="showLogin()">TAP TO START</button>
+            <div class="intro-logo">⚽</div>
+            <h1 class="game-title">PITCH<span class="title-sub">WALKER</span></h1>
+            <div class="version-tag">ULTIMATE EDITION v100</div>
+            <div class="tagline">Pokemon GO meets FIFA Ultimate Team</div>
+            <button class="btn btn-green start-btn" onclick="showLogin()">TAP TO START</button>
         </div>
         
         <div class="login-box" id="login-box">
-            <h2 style="color:gold;">NEW SAVE FILE</h2>
-            <input type="text" id="inp-name" class="input-field" placeholder="ENTER MANAGER NAME">
+            <h2 style="color:gold;">CREATE MANAGER</h2>
+            <input type="text" id="inp-name" class="input-field" placeholder="ENTER YOUR NAME" maxlength="15">
             <button class="btn btn-green" onclick="createAccount()">START CAREER</button>
             <button class="btn btn-red" onclick="backToTitle()">CANCEL</button>
         </div>
@@ -58,19 +63,29 @@
     <div id="view-map" class="view-container">
         <div id="map-container"><div id="map"></div></div>
         <div class="map-overlay"></div>
-        <button class="cabinet-btn" onclick="openBag()">🗄️</button>
+        <button class="store-btn" onclick="openBag()">🛒</button>
         <button id="gps-btn" class="map-btn" onclick="recenterMap()">🎯</button>
+        <div class="map-stats">
+            <div class="stat-pill">💰 <span id="map-coins">0</span></div>
+            <div class="stat-pill">⭐ LV <span id="map-level">1</span></div>
+        </div>
     </div>
 
     <div id="view-squad" class="view-container full-panel">
-        <div style="padding:15px; text-align:center;">
-            <h2>SQUAD (OVR: <span id="team-ovr">0</span>)</h2>
-            <button class="btn btn-green" onclick="autoPick()">AUTO-PICK XI</button>
+        <div class="panel-header">
+            <h2>MY SQUAD</h2>
+            <div class="squad-stats">
+                <span class="stat-badge">OVR: <strong id="team-ovr">0</strong></span>
+                <span class="stat-badge">CHEM: <strong id="team-chem">0</strong></span>
+            </div>
         </div>
         <div class="pitch-container" id="pitch"></div>
-        <div style="padding:15px;">
-            <button class="btn" onclick="playMatch()">⚽ PLAY MATCH</button>
-            <h3 style="color:#aaa; border-bottom:1px solid #444; margin-top:20px;">ROSTER</h3>
+        <div class="squad-actions">
+            <button class="btn btn-green" onclick="autoPick()">AUTO-PICK XI</button>
+            <button class="btn btn-purple" onclick="playMatch()">⚽ PLAY MATCH</button>
+        </div>
+        <div class="roster-section">
+            <h3>ROSTER (<span id="squad-count">0</span>)</h3>
             <div class="filter-bar">
                 <button class="filter-btn active" onclick="setFilter('ALL', this)">ALL</button>
                 <button class="filter-btn" onclick="setFilter('GK', this)">GK</button>
@@ -82,82 +97,172 @@
         </div>
     </div>
 
+    <div id="view-market" class="view-container full-panel">
+        <div class="panel-header">
+            <h2>TRANSFER MARKET</h2>
+        </div>
+        <div class="market-filters">
+            <select onchange="filterMarket('position', this.value)">
+                <option value="">All Positions</option>
+                <option value="GK">GK</option>
+                <option value="DEF">DEF</option>
+                <option value="MID">MID</option>
+                <option value="FWD">FWD</option>
+            </select>
+            <select onchange="filterMarket('rarity', this.value)">
+                <option value="">All Rarities</option>
+                <option value="bronze">Bronze</option>
+                <option value="silver">Silver</option>
+                <option value="gold">Gold</option>
+                <option value="special">Special</option>
+                <option value="icon">Icon</option>
+            </select>
+            <select onchange="filterMarket('league', this.value)">
+                <option value="">All Leagues</option>
+                <option value="Premier League">Premier League</option>
+                <option value="La Liga">La Liga</option>
+                <option value="Bundesliga">Bundesliga</option>
+                <option value="Serie A">Serie A</option>
+                <option value="Ligue 1">Ligue 1</option>
+            </select>
+        </div>
+        <div id="market-listings" class="market-listings"></div>
+    </div>
+
+    <div id="view-sbc" class="view-container full-panel">
+        <div class="panel-header">
+            <h2>SQUAD BUILDING CHALLENGES</h2>
+            <p class="panel-subtitle">Trade players for guaranteed rewards</p>
+        </div>
+        <div id="sbc-list" class="sbc-list"></div>
+    </div>
+
+    <div id="view-objectives" class="view-container full-panel">
+        <div class="panel-header">
+            <h2>OBJECTIVES</h2>
+        </div>
+        <div class="objectives-section">
+            <h3>DAILY</h3>
+            <div id="daily-objectives" class="objectives-list"></div>
+        </div>
+        <div class="objectives-section">
+            <h3>WEEKLY</h3>
+            <div id="weekly-objectives" class="objectives-list"></div>
+        </div>
+    </div>
+
     <div id="view-club" class="view-container full-panel">
-        <div style="padding:20px; text-align:center;">
-            <h1 id="club-name-display" style="color:var(--gold); margin:0;">MY CLUB</h1>
-            <div style="display:flex; justify-content:center; gap:20px; margin-top:10px; font-size:24px;">
+        <div class="panel-header club-header">
+            <h1 id="club-name-display">MY CLUB</h1>
+            <div class="club-stats">
                 <span>💰 <span id="coin-count">0</span></span>
                 <span>👥 <span id="fan-count">0</span></span>
             </div>
         </div>
         
-        <div id="stadium-render" style="height:150px; background:linear-gradient(#87CEEB,#4CAF50); border:4px solid #fff; margin:10px; display:flex; align-items:flex-end; justify-content:center;"></div>
-        
+        <div id="stadium-render" class="stadium-preview"></div>
         <div id="inv-item-tracker" class="item-counter-box"></div>
 
-        <div style="padding:15px;">
+        <div class="club-section">
             <button class="btn" onclick="toggleInventory()" id="inv-btn">SHOW DYES ▼</button>
             <div id="club-inventory" style="display:none; background:#111; padding:10px; margin-top:10px; border:1px solid #444;">
-                <h3>UNLOCKED DYES</h3><div id="dye-grid" style="display:grid; grid-template-columns:repeat(5,1fr); gap:5px;"></div>
+                <h3>UNLOCKED DYES</h3>
+                <div id="dye-grid" class="dye-grid"></div>
             </div>
             
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
-                <div class="slot" style="background:#222; border:1px solid #555; padding:10px; text-align:center;">
-                    <div style="font-size:40px;">⚡</div>
-                    <div>AGENT</div><span style="color:gold">500 C</span>
-                    <button class="btn btn-purple" style="padding:5px; margin-top:5px; font-size:18px;" onclick="buyItem('agent')">BUY</button>
+            <div class="shop-grid">
+                <div class="shop-item">
+                    <div class="shop-icon">⚡</div>
+                    <div class="shop-name">AGENT</div>
+                    <div class="shop-price">500 Coins</div>
+                    <button class="btn btn-purple btn-sm" onclick="buyItem('agent')">BUY</button>
                 </div>
-                <div class="slot" style="background:#222; border:1px solid #555; padding:10px; text-align:center;">
-                    <div style="font-size:40px;">🔎</div>
-                    <div>SCOUT</div><span style="color:gold">200 C</span>
-                    <button class="btn" style="padding:5px; margin-top:5px; font-size:18px;" onclick="buyItem('scout')">BUY</button>
+                <div class="shop-item">
+                    <div class="shop-icon">🔎</div>
+                    <div class="shop-name">SCOUT</div>
+                    <div class="shop-price">200 Coins</div>
+                    <button class="btn btn-sm" onclick="buyItem('scout')">BUY</button>
                 </div>
             </div>
             
             <button class="btn btn-green" onclick="buildStadium()">🏗️ SET HOME HERE</button>
             <button class="btn" onclick="renameClub()">✏️ RENAME CLUB</button>
-            <br><br>
-            <button class="btn btn-purple" onclick="addHoloPack()">🎁 DEV: FREE PACK</button>
         </div>
-    </div>
-
-    <div id="view-goals" class="view-container full-panel">
-        <div style="padding:20px; text-align:center;">
-            <h1 style="color:var(--green);">CAREER GOALS</h1>
-            <div style="color:#aaa; font-size:18px;">COMPLETED: <span id="ach-count" style="color:white;">0/50</span></div>
+        
+        <div class="dev-section">
+            <h4 style="color:#666;">DEV TOOLS</h4>
+            <button class="btn btn-sm" onclick="addDevPack()">🎁 FREE PACK</button>
+            <button class="btn btn-sm" onclick="addDevCoins()">💰 +10K COINS</button>
         </div>
-        <div id="ach-list" style="padding:10px;"></div>
     </div>
 
     <div id="view-mgr" class="view-container full-panel">
-        <div style="padding:20px; text-align:center;">
+        <div class="panel-header">
             <h2>MANAGER PROFILE</h2>
-            <div id="manager-preview" style="height:150px; width:150px; margin:0 auto; background:#333; border:4px solid white; display:flex; align-items:center; justify-content:center; overflow:hidden;"></div>
-            <h1 id="mgr-name-display" style="color:white; margin:15px 0 5px 0; font-size:32px;">NAME</h1>
-            <div style="color:#aaa; font-size:14px; margin-bottom:20px;">ID: <span id="mgr-id-display" style="color:gold">---</span></div>
-            
-            <button id="sound-btn" class="btn" style="margin-bottom:20px; background:#444;" onclick="toggleSound()">🔊 SOUND: ON</button>
-
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; text-align:left;">
-                <div class="stat-box"><span style="color:#aaa; font-size:14px;">🏆 WINS</span><br><span id="stat-wins" style="color:gold; font-size:24px;">0</span></div>
-                <div class="stat-box"><span style="color:#aaa; font-size:14px;">📄 SIGNED</span><br><span id="stat-contracts" style="color:gold; font-size:24px;">0</span></div>
-                <div class="stat-box"><span style="color:#aaa; font-size:14px;">👣 DISTANCE</span><br><span id="stat-dist" style="color:gold; font-size:24px;">0.0km</span></div>
-                <div class="stat-box"><span style="color:#aaa; font-size:14px;">👥 FANS</span><br><span id="stat-fans" style="color:gold; font-size:24px;">0</span></div>
+        </div>
+        <div class="manager-card">
+            <div id="manager-preview" class="manager-avatar"></div>
+            <h1 id="mgr-name-display" class="mgr-name">NAME</h1>
+            <div class="mgr-meta">
+                <span class="level-badge">LV <span id="mgr-level">1</span></span>
+                <span class="division-badge">DIV <span id="mgr-division">10</span></span>
             </div>
-            <h3 style="margin-top:30px; border-bottom:1px solid #444;">CUSTOMIZE</h3>
-            <div class="customizer-row"><button class="arrow-btn" onclick="changeMgrLook('hair', -1)">◄</button><span>HAIR STYLE</span><button class="arrow-btn" onclick="changeMgrLook('hair', 1)">►</button></div>
-            <div class="customizer-row"><button class="arrow-btn" onclick="changeMgrLook('hairCol', -1)">◄</button><span>HAIR COLOR</span><button class="arrow-btn" onclick="changeMgrLook('hairCol', 1)">►</button></div>
-            <div class="customizer-row"><button class="arrow-btn" onclick="changeMgrLook('skin', -1)">◄</button><span>SKIN TONE</span><button class="arrow-btn" onclick="changeMgrLook('skin', 1)">►</button></div>
-            <div class="customizer-row"><button class="arrow-btn" onclick="changeMgrLook('suit', -1)">◄</button><span>SUIT COLOR</span><button class="arrow-btn" onclick="changeMgrLook('suit', 1)">►</button></div>
+            <div class="mgr-id">ID: <span id="mgr-id-display">---</span></div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-box">
+                <span class="stat-label">🏆 WINS</span>
+                <span class="stat-value" id="stat-wins">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">📄 CONTRACTS</span>
+                <span class="stat-value" id="stat-contracts">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">👣 DISTANCE</span>
+                <span class="stat-value" id="stat-dist">0.0km</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">⚽ MATCHES</span>
+                <span class="stat-value" id="stat-matches">0</span>
+            </div>
+        </div>
+        
+        <div class="settings-section">
+            <button id="sound-btn" class="btn" onclick="toggleSound()">SOUND: ON</button>
         </div>
     </div>
 
     <div id="nav-bar">
-        <div id="nav-map" class="nav-btn active" onclick="switchView('map')">MAP</div>
-        <div id="nav-squad" class="nav-btn" onclick="switchView('squad')">SQUAD</div>
-        <div id="nav-club" class="nav-btn" onclick="switchView('club')">CLUB</div>
-        <div id="nav-goals" class="nav-btn" onclick="switchView('goals')">GOALS</div>
-        <div id="nav-mgr" class="nav-btn" onclick="switchView('mgr')">BOSS</div>
+        <div id="nav-map" class="nav-btn active" onclick="switchView('map')">
+            <span class="nav-icon">🗺️</span>
+            <span class="nav-label">MAP</span>
+        </div>
+        <div id="nav-squad" class="nav-btn" onclick="switchView('squad')">
+            <span class="nav-icon">👥</span>
+            <span class="nav-label">SQUAD</span>
+        </div>
+        <div id="nav-market" class="nav-btn" onclick="switchView('market')">
+            <span class="nav-icon">💱</span>
+            <span class="nav-label">MARKET</span>
+        </div>
+        <div id="nav-sbc" class="nav-btn" onclick="switchView('sbc')">
+            <span class="nav-icon">🔄</span>
+            <span class="nav-label">SBC</span>
+        </div>
+        <div id="nav-objectives" class="nav-btn" onclick="switchView('objectives')">
+            <span class="nav-icon">🎯</span>
+            <span class="nav-label">GOALS</span>
+        </div>
+        <div id="nav-club" class="nav-btn" onclick="switchView('club')">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">CLUB</span>
+        </div>
+        <div id="nav-mgr" class="nav-btn" onclick="switchView('mgr')">
+            <span class="nav-icon">👔</span>
+            <span class="nav-label">ME</span>
+        </div>
     </div>
 
     <div class="active-contract-hud"><div class="active-row"></div></div>
@@ -165,6 +270,10 @@
     <div id="modal-overlay"><div class="modal-box" id="modal-content"></div></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="players.js"></script>
+    <script src="sbc.js"></script>
+    <script src="market.js"></script>
+    <script src="objectives.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

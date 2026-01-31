@@ -61,23 +61,79 @@ const MGR_OPTS = { SKIN: ['#ffccaa', '#8d5524', '#c68642', '#5c3a1e'], HAIR_COL:
 const DYES = { 'red': '#e63946', 'blue': '#4361ee', 'green': '#00ff00', 'gold': '#ffd700', 'neon': '#0ff', 'matrix': '#0f0', 'plasma': '#e040fb', 'dark': '#111', 'light': '#eee' };
 const SVGS = { 
     STADIUM: [`<svg viewBox="0 0 100 50"><rect x="0" y="40" width="100" height="10" fill="#2E7D32"/><rect x="10" y="35" width="80" height="2" fill="#fff"/></svg>`], 
-    BRIEFCASE: `<svg viewBox="0 0 32 32"><rect x="6" y="10" width="20" height="16" fill="#8B4513" stroke="#fff" stroke-width="2"/><path d="M12 10 V6 H20 V10" fill="none" stroke="#fff" stroke-width="2"/><text x="10" y="22" font-size="12">📦</text></svg>`, 
-    FANZONE: `<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#00bcd4" stroke="#fff" stroke-width="2"/><text x="8" y="22" font-size="14">👥</text></svg>`, 
-    CASH: `<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="gold" stroke="#fff" stroke-width="2"/><text x="8" y="22" font-size="16" fill="#000">💰</text></svg>`,
-    TRAINING: `<svg viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="16" fill="#4CAF50" stroke="#fff" stroke-width="2"/><text x="8" y="20" font-size="12">⚽</text></svg>`,
-    STADIUM_POI: `<svg viewBox="0 0 32 32"><rect x="4" y="10" width="24" height="14" fill="#1976D2" stroke="#fff" stroke-width="2"/><path d="M8 10 L16 4 L24 10" fill="#1565C0" stroke="#fff"/><text x="10" y="20" font-size="10">🏟️</text></svg>`,
-    SCOUT: `<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#9C27B0" stroke="#fff" stroke-width="2"/><text x="8" y="22" font-size="14">🔍</text></svg>`,
-    PACK: `<svg viewBox="0 0 32 32"><rect x="6" y="8" width="20" height="16" fill="#FF5722" stroke="#fff" stroke-width="2" rx="2"/><text x="10" y="20" font-size="12">🎁</text></svg>`,
-    WARDROBE: `<svg viewBox="0 0 32 32"><rect x="6" y="6" width="20" height="20" fill="#ff00ff" stroke="#fff" stroke-width="2" rx="2"/><text x="9" y="21" font-size="14">👔</text></svg>`
+    BRIEFCASE: `<svg viewBox="0 0 40 40">
+        <defs><linearGradient id="boxG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#8B6914"/><stop offset="100%" stop-color="#5D4409"/></linearGradient></defs>
+        <rect x="6" y="12" width="28" height="20" rx="3" fill="url(#boxG)" stroke="#FFD700" stroke-width="2"/>
+        <rect x="10" y="16" width="20" height="3" fill="#FFD700" opacity="0.6"/>
+        <circle cx="20" cy="24" r="4" fill="#FFD700"/><text x="17" y="27" font-size="6" fill="#000">?</text>
+    </svg>`,
+    FANZONE: `<svg viewBox="0 0 40 40">
+        <defs><linearGradient id="fanG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#00E5FF"/><stop offset="100%" stop-color="#0097A7"/></linearGradient></defs>
+        <circle cx="20" cy="20" r="16" fill="url(#fanG)" stroke="#fff" stroke-width="2"/>
+        <circle cx="14" cy="16" r="4" fill="#fff"/><circle cx="26" cy="16" r="4" fill="#fff"/>
+        <ellipse cx="20" cy="26" rx="8" ry="4" fill="#fff" opacity="0.8"/>
+    </svg>`,
+    CASH: `<svg viewBox="0 0 40 40">
+        <defs><linearGradient id="cashG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#FFE44D"/><stop offset="100%" stop-color="#FFB300"/></linearGradient></defs>
+        <circle cx="20" cy="20" r="16" fill="url(#cashG)" stroke="#FFF" stroke-width="3"/>
+        <circle cx="20" cy="20" r="12" fill="none" stroke="#B8860B" stroke-width="2"/>
+        <text x="14" y="26" font-size="16" font-weight="bold" fill="#5D4409">$</text>
+    </svg>`,
+    TRAINING: `<svg viewBox="0 0 40 40">
+        <defs><linearGradient id="trainG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#66BB6A"/><stop offset="100%" stop-color="#2E7D32"/></linearGradient></defs>
+        <rect x="4" y="8" width="32" height="24" rx="4" fill="url(#trainG)" stroke="#fff" stroke-width="2"/>
+        <circle cx="20" cy="20" r="8" fill="#fff" stroke="#000" stroke-width="1"/>
+        <path d="M15 16 L18 20 L15 24 M25 16 L22 20 L25 24" fill="none" stroke="#000" stroke-width="1.5"/>
+    </svg>`,
+    STADIUM_POI: `<svg viewBox="0 0 40 40">
+        <defs><linearGradient id="stadG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#42A5F5"/><stop offset="100%" stop-color="#1565C0"/></linearGradient></defs>
+        <ellipse cx="20" cy="28" rx="16" ry="8" fill="#1565C0" stroke="#fff" stroke-width="2"/>
+        <ellipse cx="20" cy="20" rx="16" ry="8" fill="url(#stadG)" stroke="#fff" stroke-width="2"/>
+        <rect x="4" y="20" width="32" height="8" fill="url(#stadG)"/>
+        <ellipse cx="20" cy="20" rx="10" ry="5" fill="#2E7D32"/>
+    </svg>`,
+    SCOUT: `<svg viewBox="0 0 40 40">
+        <defs><linearGradient id="scoutG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#BA68C8"/><stop offset="100%" stop-color="#7B1FA2"/></linearGradient></defs>
+        <circle cx="20" cy="20" r="16" fill="url(#scoutG)" stroke="#fff" stroke-width="2"/>
+        <circle cx="17" cy="17" r="7" fill="none" stroke="#fff" stroke-width="3"/>
+        <line x1="22" y1="22" x2="30" y2="30" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    </svg>`,
+    PACK: `<svg viewBox="0 0 40 48">
+        <defs>
+            <linearGradient id="packG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#FF7043"/><stop offset="50%" stop-color="#E64A19"/><stop offset="100%" stop-color="#BF360C"/></linearGradient>
+            <linearGradient id="packShine" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="rgba(255,255,255,0.4)"/><stop offset="50%" stop-color="rgba(255,255,255,0)"/></linearGradient>
+        </defs>
+        <rect x="4" y="4" width="32" height="40" rx="3" fill="url(#packG)" stroke="#FFD700" stroke-width="2"/>
+        <rect x="4" y="4" width="16" height="40" rx="3" fill="url(#packShine)"/>
+        <circle cx="20" cy="24" r="10" fill="#FFD700" opacity="0.3"/>
+        <circle cx="20" cy="24" r="6" fill="#fff"/><text x="16" y="28" font-size="10" font-weight="bold" fill="#E64A19">⚽</text>
+        <rect x="8" y="8" width="24" height="4" rx="2" fill="#FFD700" opacity="0.5"/>
+    </svg>`,
+    WARDROBE: `<svg viewBox="0 0 40 40">
+        <defs><linearGradient id="wardG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#FF4081"/><stop offset="100%" stop-color="#C51162"/></linearGradient></defs>
+        <rect x="6" y="6" width="28" height="28" rx="4" fill="url(#wardG)" stroke="#fff" stroke-width="2"/>
+        <path d="M14 14 L20 10 L26 14 L26 18 L24 18 L24 28 L16 28 L16 18 L14 18 Z" fill="#fff"/>
+        <circle cx="20" cy="22" r="2" fill="#C51162"/>
+    </svg>`
 };
 const TRAITS = ["Speedster", "Wall", "Sniper", "Engine", "Maestro", "Tank", "Hawk", "Shadow"];
 
+function getPackSVG(color1, color2, accent) {
+    return `<svg viewBox="0 0 30 40" style="width:30px;height:40px;filter:drop-shadow(2px 2px 2px rgba(0,0,0,0.5))">
+        <defs><linearGradient id="pg${color1.slice(1)}" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="${color1}"/><stop offset="100%" stop-color="${color2}"/></linearGradient></defs>
+        <rect x="2" y="2" width="26" height="36" rx="2" fill="url(#pg${color1.slice(1)})" stroke="${accent}" stroke-width="2"/>
+        <rect x="4" y="4" width="10" height="34" fill="rgba(255,255,255,0.15)"/>
+        <circle cx="15" cy="20" r="8" fill="${accent}" opacity="0.3"/><circle cx="15" cy="20" r="5" fill="#fff" opacity="0.8"/>
+        <rect x="6" y="6" width="18" height="3" rx="1" fill="${accent}" opacity="0.4"/>
+        <rect x="6" y="31" width="18" height="3" rx="1" fill="${accent}" opacity="0.4"/>
+    </svg>`;
+}
 const PACK_TIERS = {
-    bronze: { name: 'Bronze Pack', distance: 500, color: '#cd7f32', players: 1, rarities: ['bronze'], icon: '🟤' },
-    silver: { name: 'Silver Pack', distance: 1000, color: '#c0c0c0', players: 1, rarities: ['bronze', 'silver'], icon: '⬜' },
-    gold: { name: 'Gold Pack', distance: 1500, color: '#ffd700', players: 2, rarities: ['silver', 'gold'], icon: '🟨' },
-    premium: { name: 'Premium Pack', distance: 2000, color: '#ff6600', players: 2, rarities: ['gold', 'special'], icon: '🟧' },
-    ultimate: { name: 'Ultimate Pack', distance: 2500, color: '#ff00ff', players: 3, rarities: ['gold', 'special', 'icon'], icon: '🟪' }
+    bronze: { name: 'Bronze Pack', distance: 500, color: '#cd7f32', players: 1, rarities: ['bronze'], icon: getPackSVG('#cd7f32', '#8B5A2B', '#FFE4C4') },
+    silver: { name: 'Silver Pack', distance: 1000, color: '#c0c0c0', players: 1, rarities: ['bronze', 'silver'], icon: getPackSVG('#d0d0d0', '#808080', '#fff') },
+    gold: { name: 'Gold Pack', distance: 1500, color: '#ffd700', players: 2, rarities: ['silver', 'gold'], icon: getPackSVG('#ffd700', '#B8860B', '#fff') },
+    premium: { name: 'Premium Pack', distance: 2000, color: '#ff6600', players: 2, rarities: ['gold', 'special'], icon: getPackSVG('#ff6600', '#cc3300', '#FFD700') },
+    ultimate: { name: 'Ultimate Pack', distance: 2500, color: '#ff00ff', players: 3, rarities: ['gold', 'special', 'icon'], icon: getPackSVG('#ff00ff', '#8800aa', '#00ffff') }
 };
 
 const defaultState = { 

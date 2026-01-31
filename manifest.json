@@ -2,7 +2,9 @@
   "name": "PitchWalker Ultimate",
   "short_name": "PitchWalker",
   "description": "Pokemon GO meets FIFA Ultimate Team - Walk to collect players, build your squad, complete SBCs, trade on the market",
-  "start_url": "/",
+  "start_url": "./index.html",
+  "scope": "./",
+  "id": "pitchwalker-ultimate",
   "display": "standalone",
   "background_color": "#0a0f0a",
   "theme_color": "#ffd700",
@@ -11,12 +13,14 @@
     {
       "src": "https://cdn-icons-png.flaticon.com/512/53/53283.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "https://cdn-icons-png.flaticon.com/512/53/53283.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "categories": ["games", "sports"]

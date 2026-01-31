@@ -590,37 +590,129 @@ function startPackSequence(players){
     updateObjectives('packs', 1);
     saveGame(); 
     updateUI(); 
-    document.getElementById('pack-overlay').style.display='flex'; 
-    document.getElementById('pack-wrapper').style.display='block'; 
-    document.getElementById('pack-card-display').style.display='none'; 
+    
+    const overlay = document.getElementById('pack-overlay');
+    const wrapper = document.getElementById('pack-wrapper');
+    const display = document.getElementById('pack-card-display');
+    
+    overlay.style.display = 'flex';
+    wrapper.style.display = 'block';
+    display.style.display = 'none';
+    
+    const bestRarity = getBestRarity(players);
+    const tierColors = { bronze: '#cd7f32', silver: '#c0c0c0', gold: '#ffd700', special: '#ff0080', icon: '#00ffff' };
+    
+    wrapper.innerHTML = `
+        <div class="pack-body" style="filter: drop-shadow(0 0 30px ${tierColors[bestRarity] || tierColors.gold});">📦</div>
+        <div class="pack-label">TAP TO OPEN</div>
+    `;
+    
     playAudio('pack'); 
     pulse(200); 
 }
 
+function getBestRarity(players) {
+    const rarityOrder = ['bronze', 'silver', 'gold', 'special', 'icon'];
+    let best = 'bronze';
+    players.forEach(p => {
+        const idx = rarityOrder.indexOf(p.rarity || 'bronze');
+        if (idx > rarityOrder.indexOf(best)) best = p.rarity;
+    });
+    return best;
+}
+
 function revealPack(){ 
     if(pendingPack.length === 0) return; 
-    const w=document.getElementById('pack-wrapper'); 
-    const d=document.getElementById('pack-card-display'); 
-    w.style.display='none'; 
-    d.style.display='block'; 
     
-    d.innerHTML = pendingPack.map((p, idx) => getCardHTML(p, idx === 0)).join('');
+    const wrapper = document.getElementById('pack-wrapper');
+    const display = document.getElementById('pack-card-display');
+    const bestRarity = getBestRarity(pendingPack);
     
-    pendingPack.forEach(p => {
-        state.squad.push({ ...p, uniqueId: Date.now() + Math.random(), acquired: Date.now() });
-    });
+    wrapper.innerHTML = `
+        <div class="pack-rip-container">
+            <div class="pack-rip-left"></div>
+            <div class="pack-rip-right"></div>
+            <div class="pack-rip-glow ${bestRarity}"></div>
+        </div>
+    `;
     
-    saveGame(); 
-    updateUI(); 
-    playAudio('goal'); 
-    pulse([100,50,100]); 
+    playAudio('ui');
+    pulse(100);
     
-    checkAchievements();
-    pendingPack = [];
+    if (bestRarity === 'special' || bestRarity === 'icon') {
+        document.body.classList.add('screen-shake');
+        setTimeout(() => document.body.classList.remove('screen-shake'), 500);
+        createFireworks(bestRarity);
+    }
+    
+    setTimeout(() => {
+        wrapper.style.display = 'none';
+        display.style.display = 'block';
+        
+        const isMulti = pendingPack.length > 1;
+        display.innerHTML = `
+            <div class="pack-card-reveal">
+                <div class="${isMulti ? 'pack-card-multi' : ''}">
+                    ${pendingPack.map((p, idx) => getEnhancedCardHTML(p, idx, isMulti)).join('')}
+                </div>
+                <button class="btn btn-gold" onclick="closePack()" style="margin-top: 20px; width: auto; padding: 15px 40px;">
+                    COLLECT
+                </button>
+            </div>
+        `;
+        
+        pendingPack.forEach(p => {
+            state.squad.push({ ...p, uniqueId: Date.now() + Math.random(), acquired: Date.now() });
+        });
+        
+        saveGame(); 
+        updateUI(); 
+        playAudio('goal'); 
+        pulse([100,50,100]); 
+        
+        checkAchievements();
+        pendingPack = [];
+    }, 700);
+}
+
+function getEnhancedCardHTML(player, index, isMulti) {
+    const rarity = player.rarity || 'gold';
+    const delay = index * 0.15;
+    const sizeClass = isMulti ? '' : 'pack-card-reveal-single';
+    
+    return `
+        <div class="pack-card rarity-${rarity} ${sizeClass}" style="animation-delay: ${delay}s;">
+            <div class="pack-card-ovr">${player.ovr}</div>
+            <div class="pack-card-pos">${player.pos}</div>
+            <div class="pack-card-name">${player.name}</div>
+            <div class="pack-card-club">${player.club}</div>
+            <div class="pack-card-rarity ${rarity}">${rarity.toUpperCase()}</div>
+        </div>
+    `;
+}
+
+function createFireworks(rarity) {
+    const colors = rarity === 'icon' 
+        ? ['#00ffff', '#ff00ff', '#ffff00', '#00ff00', '#ff0080']
+        : ['#ff0080', '#ff00ff', '#ff4444', '#ffaa00'];
+    
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            const fw = document.createElement('div');
+            fw.className = 'firework';
+            fw.style.left = (Math.random() * 100) + '%';
+            fw.style.top = (Math.random() * 100) + '%';
+            fw.style.background = colors[Math.floor(Math.random() * colors.length)];
+            fw.style.boxShadow = `0 0 10px ${colors[Math.floor(Math.random() * colors.length)]}`;
+            document.body.appendChild(fw);
+            setTimeout(() => fw.remove(), 1000);
+        }, i * 50);
+    }
 }
 
 function closePack(){ 
     document.getElementById('pack-overlay').style.display='none'; 
+    document.getElementById('pack-card-display').innerHTML = '';
     pendingPack = [];
 }
 
@@ -1114,7 +1206,7 @@ function checkWardrobeUnlocks() {
         'hair_spiky': stats.packsOpened >= 20
     };
     
-    const division = getDivision(state.manager.rating);
+    const division = getDivisionFromRating(state.manager.rating);
     if (division <= 5) unlockConditions['hair_slick'] = true;
     if (division <= 3) unlockConditions['pants_gold'] = true;
     if (division <= 2) unlockConditions['shoes_gold'] = true;

@@ -14,6 +14,15 @@ Create a game that rivals Pokemon GO by leveraging football's global popularity,
 - Manager customization with unlockable wardrobe items
 
 ## Recent Changes
+- January 31, 2026: Extensive achievements system (50+ achievements)
+  - Category filters: All, Walking, Matches, Squad, Misc
+  - Progress tracking with visual progress bars
+  - Categories: distance, contracts, wins, matches, fans, squad size, SBCs, packs, division, coins, team OVR, card rarities
+  - Safe defaults for old saves missing stats
+- January 31, 2026: UI/UX improvements
+  - Removed dev tools (free packs/coins) from club menu
+  - Map HUD: Active packs stacked bottom-left, contracts stacked bottom-right
+  - Notifications are now tap-to-dismiss with visual close indicator
 - January 31, 2026: Interactive pack opening animation system
   - Tap-to-confirm flow before opening packs
   - Card pack ripping animation with halves splitting apart

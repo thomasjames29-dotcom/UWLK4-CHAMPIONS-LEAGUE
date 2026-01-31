@@ -1522,6 +1522,63 @@ html, body {
 .incubator-slot.active {
     border-width: 4px;
 }
+
+/* CONTRACT HUD */
+.active-contract-hud {
+    position: absolute;
+    top: 70px;
+    left: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 3px solid var(--gold);
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 2000;
+    box-shadow: 4px 4px 0 #000;
+}
+.contract-hud-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 10px;
+}
+.active-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+.hud-slot {
+    background: linear-gradient(180deg, #1a1a2e 0%, #0a0a1a 100%);
+    border: 2px solid #555;
+    border-radius: 6px;
+    padding: 8px 12px;
+    min-width: 90px;
+    cursor: pointer;
+    transition: transform 0.1s, border-color 0.2s;
+}
+.hud-slot:hover, .hud-slot:active {
+    transform: scale(1.05);
+    border-color: var(--gold);
+}
+.tier-bronze { color: #cd7f32; }
+.tier-silver { color: #c0c0c0; }
+.tier-gold { color: #ffd700; }
+.progress-track {
+    height: 8px;
+    background: #222;
+    border-radius: 4px;
+    margin: 5px 0;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+.tier-fill-bronze { background: linear-gradient(90deg, #cd7f32, #8B5A2B); }
+.tier-fill-silver { background: linear-gradient(90deg, #c0c0c0, #808080); }
+.tier-fill-gold { background: linear-gradient(90deg, #ffd700, #B8860B); }
 .incubator-icon {
     font-size: 28px;
     margin-bottom: 5px;

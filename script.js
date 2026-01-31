@@ -173,6 +173,14 @@ let currentMarketFilters = {};
 let sbcSubmission = [];
 let currentSBC = null;
 
+function getPlayerImageUrl(player) {
+    const initials = player.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+    const bgColor = player.rarity === 'gold' ? '#ffd700' : player.rarity === 'special' ? '#ff0080' : player.rarity === 'icon' ? '#00ffff' : player.rarity === 'silver' ? '#c0c0c0' : '#cd7f32';
+    const textColor = player.rarity === 'icon' || player.rarity === 'silver' || player.rarity === 'gold' ? '#000' : '#fff';
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="${bgColor}" stroke="#000" stroke-width="3"/><text x="50" y="50" text-anchor="middle" dominant-baseline="central" font-family="Arial,sans-serif" font-size="36" font-weight="bold" fill="${textColor}">${initials}</text></svg>`;
+    return 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+
 const ACHIEVEMENTS = [ 
     {id:1, t:"Baby Steps", d:"Walk 1km", type:'dist', val:1000, r:"500 Coins"}, 
     {id:2, t:"Jogger", d:"Walk 5km", type:'dist', val:5000, r:"2000 Coins"}, 
@@ -277,7 +285,9 @@ function useAgent(index) {
         showToast("Agent Boosted +500m!");
         if(state.active[index].progress >= state.active[index].required) finishContract(index);
         saveGame(); updateUI(); updateClubUI();
-    } else { showToast("No Agents! Buy in Club."); switchView('club'); }
+    } else { 
+        showToast("No Agents available. Walk to progress or buy agents in Club.");
+    }
 }
 
 function handleGPSUpdate(pos) { 
@@ -891,7 +901,20 @@ function renderSquadView() {
     if(rc) { 
         let fs = state.squad.filter(p => currentFilter === 'ALL' || p.pos === currentFilter);
         fs.sort((a,b) => b.ovr - a.ovr);
-        rc.innerHTML = fs.length === 0 ? '<div style="text-align:center;color:#888;padding:20px;">No players yet. Walk to find contracts!</div>' : fs.map(p => `<div class="squad-list-item rarity-${p.rarity}" onclick="showCard('${p.uniqueId}')"><div class="squad-list-ovr">${p.ovr}</div><div class="player-info"><div class="player-name">${p.name}</div><div class="player-details">${p.pos} | ${p.club || 'Free Agent'}</div></div><div class="player-rarity-badge rarity-badge-${p.rarity}">${p.rarity.toUpperCase()}</div></div>`).join(''); 
+        rc.innerHTML = fs.length === 0 ? '<div style="text-align:center;color:#888;padding:20px;">No players yet. Walk to find contracts!</div>' : fs.map(p => {
+            const playerImg = getPlayerImageUrl(p);
+            return `<div class="squad-list-item rarity-${p.rarity}" onclick="showCard('${p.uniqueId}')">
+                <div class="squad-player-avatar">
+                    <img src="${playerImg}" alt="${p.name}" onerror="this.parentElement.innerHTML='⚽'">
+                </div>
+                <div class="squad-list-ovr">${p.ovr}</div>
+                <div class="player-info">
+                    <div class="player-name">${p.name}</div>
+                    <div class="player-details">${p.pos} | ${p.club || 'Free Agent'}</div>
+                </div>
+                <div class="player-rarity-badge rarity-badge-${p.rarity}">${p.rarity.toUpperCase()}</div>
+            </div>`;
+        }).join(''); 
     }
     
     const teamOvr = calculateTeamOVR();
@@ -1403,11 +1426,16 @@ function showCard(uniqueId){
     const p = state.squad.find(x => x.uniqueId === uniqueId);
     if(!p) return; 
     
+    const playerImg = getPlayerImageUrl(p);
+    
     const cardHTML = `
         <div class="full-player-card card-${p.rarity}">
             <div class="card-header">
                 <div class="card-ovr">${p.ovr}</div>
                 <div class="card-pos">${p.pos}</div>
+            </div>
+            <div class="card-player-image">
+                <img src="${playerImg}" alt="${p.name}" onerror="this.style.display='none'">
             </div>
             <div class="card-name">${p.name}</div>
             <div class="card-info">${p.club || 'Free Agent'} | ${p.nation || 'Unknown'}</div>

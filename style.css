@@ -254,18 +254,51 @@ html, body {
 .pitch-container { 
     position: relative;
     width: calc(100% - 20px); 
-    margin: 10px;
-    height: 280px; 
-    background: repeating-linear-gradient(
-        90deg,
-        #1a5c1a 0px,
-        #1a5c1a 30px,
-        #228822 30px,
-        #228822 60px
-    );
-    border: 4px solid #fff;
-    box-shadow: 4px 4px 0 #000;
+    margin: 10px auto;
+    aspect-ratio: 4/3;
+    max-height: 320px;
+    min-height: 220px;
+    background: 
+        linear-gradient(90deg, transparent 49.5%, rgba(255,255,255,0.4) 49.5%, rgba(255,255,255,0.4) 50.5%, transparent 50.5%),
+        repeating-linear-gradient(
+            90deg,
+            #1a5c1a 0px,
+            #1a5c1a 25px,
+            #228b22 25px,
+            #228b22 50px
+        );
+    border: 5px solid #fff;
+    box-shadow: 4px 4px 0 #000, inset 0 0 30px rgba(0,0,0,0.3);
     box-sizing: border-box;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.pitch-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    border: 3px solid rgba(255,255,255,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.pitch-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 45px;
+    border: 3px solid rgba(255,255,255,0.4);
+    border-bottom: none;
+    border-radius: 0 0 0 0;
+    pointer-events: none;
 }
 .pitch-slot { 
     position: absolute; 
@@ -306,7 +339,12 @@ html, body {
 .squad-actions { display: flex; gap: 10px; padding: 0 10px; }
 .squad-actions .btn { flex: 1; }
 
-.roster-section { padding: 15px; }
+.roster-section { 
+    padding: 15px; 
+    background: linear-gradient(180deg, rgba(20,20,40,0.8) 0%, rgba(10,10,30,0.9) 100%);
+    border-top: 3px solid var(--gold);
+    margin-top: 10px;
+}
 .roster-section h3 { 
     font-family: 'Press Start 2P', monospace;
     font-size: 10px;
@@ -314,6 +352,110 @@ html, body {
     margin-bottom: 10px;
     text-shadow: 2px 2px 0 #000;
 }
+
+#squad-list-container {
+    max-height: 45vh;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.squad-list-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #0d0d1f 100%);
+    border: 2px solid #333;
+    border-left: 4px solid #555;
+    margin-bottom: 8px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.squad-list-item:hover {
+    transform: translateX(5px);
+    border-color: #666;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.squad-list-item:active {
+    transform: scale(0.98);
+}
+
+.squad-list-item.rarity-bronze { border-left-color: var(--bronze); }
+.squad-list-item.rarity-silver { border-left-color: var(--silver); }
+.squad-list-item.rarity-gold { border-left-color: var(--gold); background: linear-gradient(135deg, #2a2a1e 0%, #1a1a0d 100%); }
+.squad-list-item.rarity-special { border-left-color: var(--special); background: linear-gradient(135deg, #2a1a2e 0%, #1a0d1f 100%); box-shadow: 0 0 10px rgba(255,0,128,0.2); }
+.squad-list-item.rarity-icon { border-left-color: var(--icon); background: linear-gradient(135deg, #1a2a2e 0%, #0d1a1f 100%); box-shadow: 0 0 10px rgba(0,255,255,0.2); }
+
+.squad-player-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #222;
+    flex-shrink: 0;
+    font-size: 20px;
+}
+
+.squad-player-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.squad-list-ovr {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--gold);
+    min-width: 35px;
+    text-align: center;
+    text-shadow: 1px 1px 2px #000;
+}
+
+.player-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.player-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: #fff;
+    text-shadow: 1px 1px 0 #000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-details {
+    font-family: 'VT323', monospace;
+    font-size: 14px;
+    color: #888;
+    margin-top: 3px;
+}
+
+.player-rarity-badge {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.rarity-badge-bronze { background: linear-gradient(180deg, var(--bronze), #8b5a2b); color: #fff; }
+.rarity-badge-silver { background: linear-gradient(180deg, var(--silver), #888); color: #000; }
+.rarity-badge-gold { background: linear-gradient(180deg, var(--gold), #b8860b); color: #000; }
+.rarity-badge-special { background: linear-gradient(180deg, var(--special), #aa0055); color: #fff; }
+.rarity-badge-icon { background: linear-gradient(180deg, var(--icon), #008888); color: #000; }
 
 .filter-bar { display: flex; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
 .filter-btn { 
@@ -904,6 +1046,136 @@ html, body {
     color: var(--text-dim);
     position: relative;
     z-index: 1;
+}
+
+/* FULL PLAYER CARD (Modal) */
+.full-player-card {
+    background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1f 100%);
+    border: 4px solid var(--gold);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.full-player-card.card-bronze { border-color: var(--bronze); background: linear-gradient(180deg, #3a2a1a 0%, #1a1005 100%); }
+.full-player-card.card-silver { border-color: var(--silver); background: linear-gradient(180deg, #2a2a2e 0%, #15151f 100%); }
+.full-player-card.card-gold { border-color: var(--gold); background: linear-gradient(180deg, #3a3a1a 0%, #1a1a05 100%); box-shadow: 0 0 20px rgba(255,215,0,0.3); }
+.full-player-card.card-special { border-color: var(--special); background: linear-gradient(180deg, #3a1a2e 0%, #1a0515 100%); box-shadow: 0 0 25px rgba(255,0,128,0.4); }
+.full-player-card.card-icon { border-color: var(--icon); background: linear-gradient(180deg, #1a3a3e 0%, #051a1f 100%); box-shadow: 0 0 30px rgba(0,255,255,0.4); }
+
+.full-player-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.full-player-card .card-ovr {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 28px;
+    color: var(--gold);
+    text-shadow: 2px 2px 0 #000;
+}
+
+.full-player-card .card-pos {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    color: #fff;
+    background: rgba(0,0,0,0.5);
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+
+.card-player-image {
+    width: 100px;
+    height: 100px;
+    margin: 10px auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-player-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.full-player-card .card-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: #fff;
+    text-shadow: 1px 1px 0 #000;
+    margin: 10px 0 5px;
+}
+
+.full-player-card .card-info {
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 15px;
+}
+
+.full-player-card .card-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    background: rgba(0,0,0,0.4);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.full-player-card .stat-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.full-player-card .stat-row span:first-child {
+    font-family: 'VT323', monospace;
+    font-size: 12px;
+    color: #888;
+}
+
+.full-player-card .stat-val {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    color: var(--gold);
+    text-shadow: 1px 1px 0 #000;
+}
+
+.full-player-card .card-traits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    margin: 10px 0;
+}
+
+.trait-tag {
+    font-family: 'VT323', monospace;
+    font-size: 12px;
+    background: var(--purple);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.card-rarity-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: var(--gold);
+    margin-top: 10px;
+    letter-spacing: 2px;
 }
 .pack-card-club { 
     font-size: 16px; 

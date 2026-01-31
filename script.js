@@ -1,10 +1,63 @@
-/* --- PITCHWALKER v100 (Ultimate Edition) --- */
+/* --- PITCHWALKER v100 (Ultimate Edition - FIFA 98 RETRO) --- */
 
 const SAVE_KEY = 'pitchwalker_master_save'; 
 const BACKUP_KEY = 'pitchwalker_backup_save';
 
+const WARDROBE = {
+    hairstyles: [
+        { id: 'hair_short', name: 'Short Cut', icon: '💇', unlocked: true, source: 'starter' },
+        { id: 'hair_afro', name: 'Afro', icon: '🦱', unlocked: false, source: 'walk_5km' },
+        { id: 'hair_bald', name: 'Bald', icon: '👨‍🦲', unlocked: false, source: 'win_10' },
+        { id: 'hair_mohawk', name: 'Mohawk', icon: '🧑‍🎤', unlocked: false, source: 'sbc_5' },
+        { id: 'hair_long', name: 'Long Hair', icon: '💁', unlocked: false, source: 'discover' },
+        { id: 'hair_dreads', name: 'Dreadlocks', icon: '🧔', unlocked: false, source: 'discover' },
+        { id: 'hair_spiky', name: 'Spiky', icon: '😎', unlocked: false, source: 'pack_20' },
+        { id: 'hair_slick', name: 'Slicked Back', icon: '🤵', unlocked: false, source: 'div_5' }
+    ],
+    shirts: [
+        { id: 'shirt_polo', name: 'Polo Shirt', icon: '👔', color: '#0066cc', unlocked: true, source: 'starter' },
+        { id: 'shirt_suit', name: 'Suit Jacket', icon: '🧥', color: '#1a1a2e', unlocked: false, source: 'win_5' },
+        { id: 'shirt_tracksuit', name: 'Tracksuit', icon: '🎽', color: '#cc0000', unlocked: false, source: 'walk_10km' },
+        { id: 'shirt_hoodie', name: 'Hoodie', icon: '🧤', color: '#333333', unlocked: false, source: 'discover' },
+        { id: 'shirt_retro', name: 'Retro Jersey', icon: '⚽', color: '#ffcc00', unlocked: false, source: 'collect_50' },
+        { id: 'shirt_gold', name: 'Gold Blazer', icon: '✨', color: '#ffd700', unlocked: false, source: 'div_1' },
+        { id: 'shirt_tuxedo', name: 'Tuxedo', icon: '🎩', color: '#000000', unlocked: false, source: 'sbc_10' },
+        { id: 'shirt_casual', name: 'Casual Tee', icon: '👕', color: '#4CAF50', unlocked: false, source: 'discover' }
+    ],
+    pants: [
+        { id: 'pants_dress', name: 'Dress Pants', icon: '👖', color: '#1a1a2e', unlocked: true, source: 'starter' },
+        { id: 'pants_jeans', name: 'Jeans', icon: '👖', color: '#0066aa', unlocked: false, source: 'walk_2km' },
+        { id: 'pants_shorts', name: 'Shorts', icon: '🩳', color: '#222222', unlocked: false, source: 'discover' },
+        { id: 'pants_track', name: 'Track Pants', icon: '🦵', color: '#cc0000', unlocked: false, source: 'match_10' },
+        { id: 'pants_gold', name: 'Gold Pants', icon: '✨', color: '#ffd700', unlocked: false, source: 'div_3' }
+    ],
+    shoes: [
+        { id: 'shoes_dress', name: 'Dress Shoes', icon: '👞', color: '#4a2c0a', unlocked: true, source: 'starter' },
+        { id: 'shoes_sneakers', name: 'Sneakers', icon: '👟', color: '#ffffff', unlocked: false, source: 'walk_1km' },
+        { id: 'shoes_boots', name: 'Football Boots', icon: '⚽', color: '#000000', unlocked: false, source: 'match_5' },
+        { id: 'shoes_gold', name: 'Gold Kicks', icon: '✨', color: '#ffd700', unlocked: false, source: 'div_2' },
+        { id: 'shoes_retro', name: 'Retro Cleats', icon: '🏃', color: '#cc0000', unlocked: false, source: 'discover' }
+    ],
+    accessories: [
+        { id: 'acc_none', name: 'None', icon: '❌', unlocked: true, source: 'starter' },
+        { id: 'acc_glasses', name: 'Glasses', icon: '👓', unlocked: false, source: 'discover' },
+        { id: 'acc_sunglasses', name: 'Sunglasses', icon: '🕶️', unlocked: false, source: 'fans_500' },
+        { id: 'acc_cap', name: 'Cap', icon: '🧢', unlocked: false, source: 'discover' },
+        { id: 'acc_headphones', name: 'Headphones', icon: '🎧', unlocked: false, source: 'pack_10' },
+        { id: 'acc_whistle', name: 'Whistle', icon: '📣', unlocked: false, source: 'match_20' },
+        { id: 'acc_medal', name: 'Gold Medal', icon: '🥇', unlocked: false, source: 'win_50' },
+        { id: 'acc_scarf', name: 'Team Scarf', icon: '🧣', unlocked: false, source: 'discover' }
+    ],
+    skinTones: [
+        { id: 'skin_1', name: 'Light', color: '#ffccaa', unlocked: true },
+        { id: 'skin_2', name: 'Medium', color: '#c68642', unlocked: true },
+        { id: 'skin_3', name: 'Tan', color: '#8d5524', unlocked: true },
+        { id: 'skin_4', name: 'Dark', color: '#5c3a1e', unlocked: true }
+    ]
+};
+
 const ASSETS = { HEAD: { BASE: `<path d="M10 8 h12 v14 h-12 Z" />` }, EYES: [`<rect x="11" y="14" width="2" height="2" fill="#000"/><rect x="19" y="14" width="2" height="2" fill="#000"/>`, `<rect x="11" y="14" width="3" height="1" fill="#000"/><rect x="18" y="14" width="3" height="1" fill="#000"/>`], MOUTH: [`<rect x="13" y="20" width="6" height="1" fill="#a55"/>`, `<path d="M13 19 Q16 22 19 19" fill="none" stroke="#a55" stroke-width="1"/>`], HAIR: [`<path d="M10 6 h12 v4 h-12 Z" />`, `<path d="M8 6 h16 v6 h-16 Z" />`, `<path d="M14 2 h4 v8 h-4 Z" />`, `<path d="M8 4 h16 v10 h-16 Z" />`] };
-const MGR_OPTS = { SKIN: ['#ffccaa', '#8d5524', '#c68642'], HAIR_COL: ['#000', '#552200', '#888', '#fff'], SUIT: ['#0f3460', '#1a1a2e', '#4caf50', '#8B4513'] };
+const MGR_OPTS = { SKIN: ['#ffccaa', '#8d5524', '#c68642', '#5c3a1e'], HAIR_COL: ['#000', '#552200', '#888', '#fff', '#cc0000', '#ffd700'], SUIT: ['#0f3460', '#1a1a2e', '#4caf50', '#8B4513', '#cc0000', '#ffd700'] };
 const DYES = { 'red': '#e63946', 'blue': '#4361ee', 'green': '#00ff00', 'gold': '#ffd700', 'neon': '#0ff', 'matrix': '#0f0', 'plasma': '#e040fb', 'dark': '#111', 'light': '#eee' };
 const SVGS = { 
     STADIUM: [`<svg viewBox="0 0 100 50"><rect x="0" y="40" width="100" height="10" fill="#2E7D32"/><rect x="10" y="35" width="80" height="2" fill="#fff"/></svg>`], 
@@ -14,14 +67,23 @@ const SVGS = {
     TRAINING: `<svg viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="16" fill="#4CAF50" stroke="#fff" stroke-width="2"/><text x="8" y="20" font-size="12">⚽</text></svg>`,
     STADIUM_POI: `<svg viewBox="0 0 32 32"><rect x="4" y="10" width="24" height="14" fill="#1976D2" stroke="#fff" stroke-width="2"/><path d="M8 10 L16 4 L24 10" fill="#1565C0" stroke="#fff"/><text x="10" y="20" font-size="10">🏟️</text></svg>`,
     SCOUT: `<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#9C27B0" stroke="#fff" stroke-width="2"/><text x="8" y="22" font-size="14">🔍</text></svg>`,
-    PACK: `<svg viewBox="0 0 32 32"><rect x="6" y="8" width="20" height="16" fill="#FF5722" stroke="#fff" stroke-width="2" rx="2"/><text x="10" y="20" font-size="12">🎁</text></svg>`
+    PACK: `<svg viewBox="0 0 32 32"><rect x="6" y="8" width="20" height="16" fill="#FF5722" stroke="#fff" stroke-width="2" rx="2"/><text x="10" y="20" font-size="12">🎁</text></svg>`,
+    WARDROBE: `<svg viewBox="0 0 32 32"><rect x="6" y="6" width="20" height="20" fill="#ff00ff" stroke="#fff" stroke-width="2" rx="2"/><text x="9" y="21" font-size="14">👔</text></svg>`
 };
 const TRAITS = ["Speedster", "Wall", "Sniper", "Engine", "Maestro", "Tank", "Hawk", "Shadow"];
 
 const defaultState = { 
     user: null, 
     club: { name:"MY CLUB", coins:1000, fans:0, inv:{agents:0, scouts:0, dyes:['red','blue','green','gold'], patterns:[0], packs: []} }, 
-    manager: { look:{h:0,hc:0,s:0,sc:0}, stats:{dist:0, contracts:0, wins:0, fans:0, matches:0, collects:0, sbcs:0, packsOpened:0}, xp: 0, rating: 1000 }, 
+    manager: { 
+        look: { skin: 'skin_1', hair: 'hair_short', hairColor: 0, shirt: 'shirt_polo', pants: 'pants_dress', shoes: 'shoes_dress', accessory: 'acc_none' },
+        stats: { dist:0, contracts:0, wins:0, fans:0, matches:0, collects:0, sbcs:0, packsOpened:0 }, 
+        xp: 0, 
+        rating: 1000 
+    },
+    wardrobe: {
+        unlocked: ['hair_short', 'shirt_polo', 'pants_dress', 'shoes_dress', 'acc_none', 'skin_1', 'skin_2', 'skin_3', 'skin_4']
+    },
     squad: [], 
     lineup: { GK: null, DEF1: null, DEF2: null, DEF3: null, DEF4: null, MID1: null, MID2: null, MID3: null, FWD1: null, FWD2: null, FWD3: null },
     active: [null, null], 
@@ -105,6 +167,12 @@ function loadGame() {
         if (!Array.isArray(state.squad)) {
             state.squad = [];
         }
+        if (!state.wardrobe || !state.wardrobe.unlocked) {
+            state.wardrobe = { unlocked: ['hair_short', 'shirt_polo', 'pants_dress', 'shoes_dress', 'acc_none', 'skin_1', 'skin_2', 'skin_3', 'skin_4'] };
+        }
+        if (!state.manager.look || typeof state.manager.look !== 'object') {
+            state.manager.look = { skin: 'skin_1', hair: 'hair_short', hairColor: 0, shirt: 'shirt_polo', pants: 'pants_dress', shoes: 'shoes_dress', accessory: 'acc_none' };
+        }
     } catch(e){ console.error('Load error:', e); } 
 }
 
@@ -151,6 +219,9 @@ function handleGPSUpdate(pos) {
             state.manager.stats.dist+=d; 
             advanceContracts(d); 
             updateObjectives('distance', d);
+            if (state.manager.stats.dist % 1000 < d) {
+                checkWardrobeUnlocks();
+            }
         } 
         updateUI(); 
         saveGame(); 
@@ -198,7 +269,8 @@ function spawnWorld(la,lo){
     for(let i=0;i<50;i++){ 
         const r=Math.random(); 
         let t='FAN'; 
-        if(r>0.85) t='PACK';
+        if(r>0.92) t='WARDROBE';
+        else if(r>0.85) t='PACK';
         else if(r>0.75) t='BOX'; 
         else if(r>0.65) t='TRAINING';
         else if(r>0.55) t='SCOUT';
@@ -226,6 +298,7 @@ function renderWorld(){
         if(i.type==='STADIUM')s=SVGS.STADIUM_POI;
         if(i.type==='SCOUT')s=SVGS.SCOUT;
         if(i.type==='PACK')s=SVGS.PACK;
+        if(i.type==='WARDROBE')s=SVGS.WARDROBE;
         
         const m=L.marker([i.lat,i.lng],{icon:L.divIcon({className:'pixel-icon',html:s,iconSize:[40,40],iconAnchor:[20,20]})}).addTo(map); 
         m.on('click',()=>interact(i)); 
@@ -285,6 +358,16 @@ function interact(i){
                 showToast("Contract slots full!");
                 return;
             }
+        } else if(i.type==='WARDROBE') {
+            const item = unlockDiscoverableItem();
+            if (item) {
+                showToast(`🎉 Found: ${item.name}!`);
+                playAudio('goal');
+            } else {
+                state.club.coins += 250;
+                showToast("+250 Coins (All items discovered!)");
+                playAudio('coin');
+            }
         }
         
         state.world.items=state.world.items.filter(x=>x.id!==i.id); 
@@ -292,6 +375,7 @@ function interact(i){
         saveGame(); 
         updateUI(); 
         checkAchievements();
+        checkWardrobeUnlocks();
     } 
 }
 
@@ -441,13 +525,11 @@ function updateUI(){
     
     if(state.user) {
         const mgrNameEl = document.getElementById('mgr-name-display');
-        const mgrIdEl = document.getElementById('mgr-id-display');
         if(mgrNameEl) mgrNameEl.innerText = state.user.name;
-        if(mgrIdEl) mgrIdEl.innerText = state.user.id;
     }
     
     const level = getLevel(state.manager.xp);
-    const levelEl = document.getElementById('mgr-level');
+    const levelEl = document.getElementById('map-level');
     if(levelEl) levelEl.innerText = level;
     
     const division = getDivisionFromRating(state.manager.rating);
@@ -461,16 +543,33 @@ function updateStats() {
     const statWins = document.getElementById('stat-wins');
     const statContracts = document.getElementById('stat-contracts');
     const statDist = document.getElementById('stat-dist');
-    const statFans = document.getElementById('stat-fans');
     const statMatches = document.getElementById('stat-matches');
-    const statLevel = document.getElementById('stat-level');
+    const statSbcs = document.getElementById('stat-sbcs');
+    const statPacks = document.getElementById('stat-packs');
+    const mgrRating = document.getElementById('mgr-rating');
+    const unlockedCount = document.getElementById('unlocked-count');
+    const totalItems = document.getElementById('total-items');
+    const divBadgeIcon = document.getElementById('div-badge-icon');
     
     if(statWins) statWins.innerText = state.manager.stats.wins;
     if(statContracts) statContracts.innerText = state.manager.stats.contracts;
     if(statDist) statDist.innerText = (state.manager.stats.dist/1000).toFixed(1) + 'km';
-    if(statFans) statFans.innerText = formatNumber(state.club.fans);
     if(statMatches) statMatches.innerText = state.manager.stats.matches;
-    if(statLevel) statLevel.innerText = getLevel(state.manager.xp);
+    if(statSbcs) statSbcs.innerText = state.manager.stats.sbcs || 0;
+    if(statPacks) statPacks.innerText = state.manager.stats.packsOpened || 0;
+    if(mgrRating) mgrRating.innerText = state.manager.rating;
+    
+    const managerPreview = document.getElementById('manager-preview');
+    if(managerPreview) managerPreview.innerHTML = getManagerSVG(100);
+    
+    const totalWardrobeItems = Object.values(WARDROBE).reduce((sum, cat) => sum + (Array.isArray(cat) ? cat.length : 0), 0);
+    const unlockedItems = state.wardrobe?.unlocked?.length || 4;
+    if(unlockedCount) unlockedCount.innerText = unlockedItems;
+    if(totalItems) totalItems.innerText = totalWardrobeItems;
+    
+    const division = getDivisionFromRating(state.manager.rating);
+    const divIcons = { 1: '🏆', 2: '🥇', 3: '🥈', 4: '🥉', 5: '⭐', 6: '✨', 7: '💫', 8: '🔶', 9: '🔷', 10: '🔹' };
+    if(divBadgeIcon) divBadgeIcon.innerText = divIcons[division] || '🔹';
 }
 
 function formatNumber(n) {
@@ -659,8 +758,263 @@ function buyPack(packType) {
     updateUI();
 }
 
-function getManagerSVG(){ 
-    return `<svg viewBox="0 0 32 32"><rect x="10" y="8" width="12" height="14" fill="#ffccaa"/><rect x="10" y="16" width="12" height="12" fill="#0f3460"/></svg>`; 
+function getManagerSVG(size = 32){ 
+    const look = state.manager.look || { skin: 'skin_1', hair: 'hair_short', shirt: 'shirt_polo', pants: 'pants_dress', shoes: 'shoes_dress', accessory: 'acc_none' };
+    
+    const skinTone = WARDROBE.skinTones.find(s => s.id === look.skin)?.color || '#ffccaa';
+    const shirt = WARDROBE.shirts.find(s => s.id === look.shirt);
+    const pants = WARDROBE.pants.find(p => p.id === look.pants);
+    const shoes = WARDROBE.shoes.find(s => s.id === look.shoes);
+    const hair = WARDROBE.hairstyles.find(h => h.id === look.hair);
+    const acc = WARDROBE.accessories.find(a => a.id === look.accessory);
+    
+    const shirtColor = shirt?.color || '#0066cc';
+    const pantsColor = pants?.color || '#1a1a2e';
+    const shoesColor = shoes?.color || '#4a2c0a';
+    const hairColor = MGR_OPTS.HAIR_COL[look.hairColor || 0] || '#000';
+    
+    let hairPath = '';
+    switch(look.hair) {
+        case 'hair_short': hairPath = `<rect x="9" y="4" width="14" height="4" fill="${hairColor}"/>`; break;
+        case 'hair_afro': hairPath = `<ellipse cx="16" cy="6" rx="9" ry="6" fill="${hairColor}"/>`; break;
+        case 'hair_bald': hairPath = ''; break;
+        case 'hair_mohawk': hairPath = `<rect x="14" y="0" width="4" height="8" fill="${hairColor}"/>`; break;
+        case 'hair_long': hairPath = `<rect x="8" y="4" width="16" height="10" fill="${hairColor}"/>`; break;
+        case 'hair_dreads': hairPath = `<rect x="8" y="4" width="16" height="12" fill="${hairColor}"/>`; break;
+        case 'hair_spiky': hairPath = `<polygon points="10,8 12,2 14,8 16,1 18,8 20,2 22,8" fill="${hairColor}"/>`; break;
+        case 'hair_slick': hairPath = `<path d="M9 6 Q16 2 23 6 L23 8 L9 8 Z" fill="${hairColor}"/>`; break;
+        default: hairPath = `<rect x="9" y="4" width="14" height="4" fill="${hairColor}"/>`;
+    }
+    
+    let accPath = '';
+    switch(look.accessory) {
+        case 'acc_glasses': accPath = `<rect x="10" y="10" width="4" height="3" fill="none" stroke="#333" stroke-width="1"/><rect x="18" y="10" width="4" height="3" fill="none" stroke="#333" stroke-width="1"/><line x1="14" y1="11" x2="18" y2="11" stroke="#333"/>`; break;
+        case 'acc_sunglasses': accPath = `<rect x="10" y="10" width="4" height="3" fill="#111"/><rect x="18" y="10" width="4" height="3" fill="#111"/><line x1="14" y1="11" x2="18" y2="11" stroke="#111"/>`; break;
+        case 'acc_cap': accPath = `<rect x="8" y="3" width="16" height="4" fill="#cc0000"/><rect x="6" y="6" width="6" height="2" fill="#cc0000"/>`; break;
+        case 'acc_headphones': accPath = `<path d="M8 10 Q8 4 16 4 Q24 4 24 10" fill="none" stroke="#333" stroke-width="2"/><rect x="6" y="9" width="4" height="5" fill="#333"/><rect x="22" y="9" width="4" height="5" fill="#333"/>`; break;
+        case 'acc_whistle': accPath = `<circle cx="20" cy="20" r="3" fill="#c0c0c0"/><line x1="17" y1="18" x2="14" y2="16" stroke="#666"/>`; break;
+        case 'acc_medal': accPath = `<circle cx="16" cy="26" r="3" fill="#ffd700" stroke="#aa8800"/><line x1="16" y1="23" x2="16" y2="18" stroke="#cc0000" stroke-width="2"/>`; break;
+        case 'acc_scarf': accPath = `<rect x="6" y="16" width="6" height="10" fill="#cc0000"/><rect x="20" y="16" width="6" height="10" fill="#cc0000"/>`; break;
+    }
+    
+    return `<svg viewBox="0 0 32 32" width="${size}" height="${size}">
+        ${hairPath}
+        <rect x="10" y="6" width="12" height="12" fill="${skinTone}" rx="2"/>
+        <rect x="12" y="10" width="2" height="2" fill="#000"/>
+        <rect x="18" y="10" width="2" height="2" fill="#000"/>
+        <rect x="14" y="14" width="4" height="1" fill="#a55"/>
+        ${accPath}
+        <rect x="8" y="18" width="16" height="10" fill="${shirtColor}" rx="1"/>
+        <rect x="10" y="28" width="12" height="6" fill="${pantsColor}"/>
+        <rect x="10" y="34" width="5" height="3" fill="${shoesColor}"/>
+        <rect x="17" y="34" width="5" height="3" fill="${shoesColor}"/>
+    </svg>`; 
+}
+
+function renderManagerPreview() {
+    const container = document.getElementById('manager-preview');
+    if (container) {
+        container.innerHTML = getManagerSVG(120);
+    }
+}
+
+function openWardrobe() {
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.id = 'wardrobe-modal';
+    modal.innerHTML = `
+        <div class="modal-content" style="max-height:90vh;">
+            <div class="modal-header">
+                <h3>👔 MANAGER WARDROBE</h3>
+            </div>
+            <div class="modal-body">
+                <div class="manager-preview" id="wardrobe-preview">${getManagerSVG(100)}</div>
+                
+                <div class="wardrobe-section">
+                    ${renderWardrobeCategory('skinTones', 'SKIN TONE', 'skin')}
+                    ${renderWardrobeCategory('hairstyles', 'HAIRSTYLE', 'hair')}
+                    <div class="wardrobe-category">
+                        <h4>HAIR COLOR</h4>
+                        <div class="wardrobe-items">
+                            ${MGR_OPTS.HAIR_COL.map((col, i) => `
+                                <div class="wardrobe-item unlocked ${state.manager.look.hairColor === i ? 'equipped' : ''}" 
+                                     onclick="setHairColor(${i})" style="background:${col};"></div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ${renderWardrobeCategory('shirts', 'SHIRT', 'shirt')}
+                    ${renderWardrobeCategory('pants', 'PANTS', 'pants')}
+                    ${renderWardrobeCategory('shoes', 'SHOES', 'shoes')}
+                    ${renderWardrobeCategory('accessories', 'ACCESSORY', 'accessory')}
+                </div>
+                
+                <button class="btn btn-green" onclick="closeModal()">SAVE & CLOSE</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+function renderWardrobeCategory(category, title, lookKey) {
+    const items = WARDROBE[category];
+    if (!items) return '';
+    
+    const unlocked = state.wardrobe?.unlocked || [];
+    const currentEquipped = state.manager.look[lookKey];
+    
+    return `
+        <div class="wardrobe-category">
+            <h4>${title}</h4>
+            <div class="wardrobe-items">
+                ${items.map(item => {
+                    const isUnlocked = unlocked.includes(item.id) || item.unlocked;
+                    const isEquipped = currentEquipped === item.id;
+                    const bgStyle = item.color ? `background:${item.color};` : '';
+                    return `
+                        <div class="wardrobe-item ${isUnlocked ? 'unlocked' : 'locked'} ${isEquipped ? 'equipped' : ''}" 
+                             onclick="${isUnlocked ? `equipItem('${lookKey}', '${item.id}')` : `showUnlockHint('${item.source}')`}"
+                             title="${item.name}${!isUnlocked ? ' (Locked)' : ''}"
+                             style="${bgStyle}">
+                            <span style="font-size:24px;">${item.icon}</span>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function equipItem(lookKey, itemId) {
+    state.manager.look[lookKey] = itemId;
+    saveGame();
+    
+    const preview = document.getElementById('wardrobe-preview');
+    if (preview) preview.innerHTML = getManagerSVG(100);
+    
+    document.querySelectorAll('.wardrobe-modal .wardrobe-item').forEach(el => {
+        el.classList.remove('equipped');
+    });
+    event.target.closest('.wardrobe-item')?.classList.add('equipped');
+    
+    refreshMapAvatar();
+    
+    const existingModal = document.getElementById('wardrobe-modal');
+    if (existingModal) existingModal.remove();
+    openWardrobe();
+    showToast("Style updated!");
+}
+
+function refreshMapAvatar() {
+    if (mgrMarker) {
+        const newIcon = L.divIcon({
+            className: 'pixel-icon',
+            html: getManagerSVG(48),
+            iconSize: [48, 48],
+            iconAnchor: [24, 40]
+        });
+        mgrMarker.setIcon(newIcon);
+    }
+}
+
+function setHairColor(index) {
+    state.manager.look.hairColor = index;
+    saveGame();
+    openWardrobe();
+}
+
+function showUnlockHint(source) {
+    const hints = {
+        'walk_1km': 'Walk 1km to unlock!',
+        'walk_2km': 'Walk 2km to unlock!',
+        'walk_5km': 'Walk 5km to unlock!',
+        'walk_10km': 'Walk 10km to unlock!',
+        'win_5': 'Win 5 matches to unlock!',
+        'win_10': 'Win 10 matches to unlock!',
+        'win_50': 'Win 50 matches to unlock!',
+        'match_5': 'Play 5 matches to unlock!',
+        'match_10': 'Play 10 matches to unlock!',
+        'match_20': 'Play 20 matches to unlock!',
+        'sbc_5': 'Complete 5 SBCs to unlock!',
+        'sbc_10': 'Complete 10 SBCs to unlock!',
+        'collect_50': 'Collect 50 players to unlock!',
+        'fans_500': 'Get 500 fans to unlock!',
+        'pack_10': 'Open 10 packs to unlock!',
+        'pack_20': 'Open 20 packs to unlock!',
+        'div_1': 'Reach Division 1 to unlock!',
+        'div_2': 'Reach Division 2 to unlock!',
+        'div_3': 'Reach Division 3 to unlock!',
+        'div_5': 'Reach Division 5 to unlock!',
+        'discover': 'Find this item in the world!'
+    };
+    showToast(hints[source] || 'Keep playing to unlock!');
+}
+
+function checkWardrobeUnlocks() {
+    const stats = state.manager.stats;
+    const unlocked = state.wardrobe?.unlocked || [];
+    const newUnlocks = [];
+    
+    const unlockConditions = {
+        'shoes_sneakers': stats.dist >= 1000,
+        'pants_jeans': stats.dist >= 2000,
+        'hair_afro': stats.dist >= 5000,
+        'shirt_tracksuit': stats.dist >= 10000,
+        'shirt_suit': stats.wins >= 5,
+        'hair_bald': stats.wins >= 10,
+        'acc_medal': stats.wins >= 50,
+        'shoes_boots': stats.matches >= 5,
+        'pants_track': stats.matches >= 10,
+        'acc_whistle': stats.matches >= 20,
+        'hair_mohawk': stats.sbcs >= 5,
+        'shirt_tuxedo': stats.sbcs >= 10,
+        'shirt_retro': stats.collects >= 50,
+        'acc_sunglasses': state.club.fans >= 500,
+        'acc_headphones': stats.packsOpened >= 10,
+        'hair_spiky': stats.packsOpened >= 20
+    };
+    
+    const division = getDivision(state.manager.rating);
+    if (division <= 5) unlockConditions['hair_slick'] = true;
+    if (division <= 3) unlockConditions['pants_gold'] = true;
+    if (division <= 2) unlockConditions['shoes_gold'] = true;
+    if (division <= 1) unlockConditions['shirt_gold'] = true;
+    
+    for (const [itemId, condition] of Object.entries(unlockConditions)) {
+        if (condition && !unlocked.includes(itemId)) {
+            unlocked.push(itemId);
+            newUnlocks.push(itemId);
+        }
+    }
+    
+    if (newUnlocks.length > 0) {
+        state.wardrobe.unlocked = unlocked;
+        saveGame();
+        const item = [...Object.values(WARDROBE)].flat().find(i => i.id === newUnlocks[0]);
+        if (item) {
+            showToast(`🎉 Unlocked: ${item.name}!`);
+        }
+    }
+}
+
+function unlockDiscoverableItem() {
+    const discoverables = [];
+    Object.values(WARDROBE).forEach(category => {
+        if (Array.isArray(category)) {
+            category.forEach(item => {
+                if (item.source === 'discover' && !state.wardrobe.unlocked.includes(item.id)) {
+                    discoverables.push(item);
+                }
+            });
+        }
+    });
+    
+    if (discoverables.length > 0) {
+        const item = discoverables[Math.floor(Math.random() * discoverables.length)];
+        state.wardrobe.unlocked.push(item.id);
+        saveGame();
+        return item;
+    }
+    return null;
 }
 
 function toggleInventory(){ 
@@ -962,6 +1316,7 @@ function endMatch() {
     document.getElementById('match-view').classList.remove('active'); 
     switchView('squad');
     updateUI();
+    checkWardrobeUnlocks();
 }
 
 function renderMarketView() {
@@ -1300,6 +1655,7 @@ function submitSBC() {
     showToast(rewardMsg);
     playAudio('goal');
     checkAchievements();
+    checkWardrobeUnlocks();
     
     currentSBC = null;
     sbcSubmission = [];

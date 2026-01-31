@@ -197,73 +197,89 @@
     </div>
 
     <div id="view-mgr" class="view-container full-panel">
-        <div class="panel-header">
+        <div class="panel-header profile-header">
             <h2>MANAGER PROFILE</h2>
         </div>
-        <div class="manager-card">
-            <div id="manager-preview" class="manager-avatar"></div>
-            <h1 id="mgr-name-display" class="mgr-name">NAME</h1>
-            <div class="mgr-meta">
-                <span class="level-badge">LV <span id="mgr-level">1</span></span>
-                <span class="division-badge">DIV <span id="mgr-division">10</span></span>
-            </div>
-            <div class="mgr-id">ID: <span id="mgr-id-display">---</span></div>
+        
+        <div class="manager-preview" id="manager-preview"></div>
+        <div class="profile-name" id="mgr-name-display">MANAGER</div>
+        
+        <div class="division-display">
+            <div class="division-badge" id="div-badge-icon">🥉</div>
+            <div class="division-name">DIVISION <span id="mgr-division">10</span></div>
+            <div class="division-rating">RATING: <span id="mgr-rating">1000</span></div>
         </div>
         
-        <div class="stats-grid">
-            <div class="stat-box">
-                <span class="stat-label">🏆 WINS</span>
-                <span class="stat-value" id="stat-wins">0</span>
+        <div style="padding: 15px;">
+            <button class="btn btn-gold" onclick="openWardrobe()">👔 CUSTOMIZE MANAGER</button>
+        </div>
+        
+        <div class="profile-stats">
+            <div class="profile-stat">
+                <div class="profile-stat-value" id="stat-wins">0</div>
+                <div class="profile-stat-label">WINS</div>
             </div>
-            <div class="stat-box">
-                <span class="stat-label">📄 CONTRACTS</span>
-                <span class="stat-value" id="stat-contracts">0</span>
+            <div class="profile-stat">
+                <div class="profile-stat-value" id="stat-matches">0</div>
+                <div class="profile-stat-label">MATCHES</div>
             </div>
-            <div class="stat-box">
-                <span class="stat-label">👣 DISTANCE</span>
-                <span class="stat-value" id="stat-dist">0.0km</span>
+            <div class="profile-stat">
+                <div class="profile-stat-value" id="stat-dist">0.0km</div>
+                <div class="profile-stat-label">WALKED</div>
             </div>
-            <div class="stat-box">
-                <span class="stat-label">⚽ MATCHES</span>
-                <span class="stat-value" id="stat-matches">0</span>
+            <div class="profile-stat">
+                <div class="profile-stat-value" id="stat-contracts">0</div>
+                <div class="profile-stat-label">CONTRACTS</div>
+            </div>
+            <div class="profile-stat">
+                <div class="profile-stat-value" id="stat-sbcs">0</div>
+                <div class="profile-stat-label">SBCs</div>
+            </div>
+            <div class="profile-stat">
+                <div class="profile-stat-value" id="stat-packs">0</div>
+                <div class="profile-stat-label">PACKS</div>
             </div>
         </div>
         
-        <div class="settings-section">
-            <button id="sound-btn" class="btn" onclick="toggleSound()">SOUND: ON</button>
+        <div class="wardrobe-section" style="padding: 15px;">
+            <h4 style="color: var(--gold); font-family: 'Press Start 2P', monospace; font-size: 10px; margin-bottom: 10px;">🔓 UNLOCKED ITEMS: <span id="unlocked-count">4</span>/<span id="total-items">30</span></h4>
+        </div>
+        
+        <div style="padding: 15px;">
+            <button id="sound-btn" class="btn btn-blue" onclick="toggleSound()">🔊 SOUND: ON</button>
         </div>
     </div>
 
-    <div id="nav-bar">
-        <div id="nav-map" class="nav-btn active" onclick="switchView('map')">
+    <nav class="bottom-nav">
+        <div class="nav-btn active" onclick="switchView('map')">
             <span class="nav-icon">🗺️</span>
-            <span class="nav-label">MAP</span>
+            MAP
         </div>
-        <div id="nav-squad" class="nav-btn" onclick="switchView('squad')">
-            <span class="nav-icon">👥</span>
-            <span class="nav-label">SQUAD</span>
+        <div class="nav-btn" onclick="switchView('squad')">
+            <span class="nav-icon">⚽</span>
+            SQUAD
         </div>
-        <div id="nav-market" class="nav-btn" onclick="switchView('market')">
-            <span class="nav-icon">💱</span>
-            <span class="nav-label">MARKET</span>
+        <div class="nav-btn" onclick="switchView('market')">
+            <span class="nav-icon">💰</span>
+            MARKET
         </div>
-        <div id="nav-sbc" class="nav-btn" onclick="switchView('sbc')">
+        <div class="nav-btn" onclick="switchView('sbc')">
             <span class="nav-icon">🔄</span>
-            <span class="nav-label">SBC</span>
+            SBC
         </div>
-        <div id="nav-objectives" class="nav-btn" onclick="switchView('objectives')">
+        <div class="nav-btn" onclick="switchView('objectives')">
             <span class="nav-icon">🎯</span>
-            <span class="nav-label">GOALS</span>
+            GOALS
         </div>
-        <div id="nav-club" class="nav-btn" onclick="switchView('club')">
+        <div class="nav-btn" onclick="switchView('club')">
             <span class="nav-icon">🏠</span>
-            <span class="nav-label">CLUB</span>
+            CLUB
         </div>
-        <div id="nav-mgr" class="nav-btn" onclick="switchView('mgr')">
+        <div class="nav-btn" onclick="switchView('mgr')">
             <span class="nav-icon">👔</span>
-            <span class="nav-label">ME</span>
+            ME
         </div>
-    </div>
+    </nav>
 
     <div class="active-contract-hud"><div class="active-row"></div></div>
     

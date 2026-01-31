@@ -1,4 +1,4 @@
-# PitchWalker Ultimate
+# PitchWalker Ultimate - FIFA 98 Retro Edition
 
 ## Overview
 PitchWalker is a location-based football card collection game that combines Pokemon GO's AR walking gameplay with FIFA Ultimate Team's squad building mechanics. Players walk to collect football cards, build squads, complete Squad Building Challenges (SBCs), and trade on a live marketplace.
@@ -11,12 +11,21 @@ Create a game that rivals Pokemon GO by leveraging football's global popularity,
 - Live marketplace for trading
 - Division Rivals ranked system
 - Daily/Weekly objectives
+- Manager customization with unlockable wardrobe items
 
 ## Recent Changes
-- January 31, 2026: Fixed JavaScript errors with saved state compatibility
-- Added generateLocalPlayer fallback function for robustness
-- Fixed loadGame function to ensure arrays are properly initialized
-- Added runtime guards for external module functions
+- January 31, 2026: Major UI overhaul with retro FIFA 98 aesthetic
+  - Pixelated fonts (Press Start 2P, VT323)
+  - Scanline CRT effects
+  - Bold red/yellow/blue color scheme
+  - Block-style buttons with shadows
+- Added full manager customization system with wardrobe
+  - Hairstyles, shirts, pants, shoes, accessories
+  - Skin tone options
+  - Hair color selection
+  - Items unlock through gameplay achievements or world discovery
+- Wardrobe items spawn in the world as discoverable collectibles
+- Fixed JavaScript errors with saved state compatibility
 
 ## Architecture
 

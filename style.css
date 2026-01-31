@@ -729,7 +729,7 @@ html, body {
 
 /* TOAST */
 #game-toast { 
-    position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-100px); 
+    position: fixed; top: 180px; left: 50%; transform: translateX(-50%) translateY(-100px); 
     background: linear-gradient(180deg, var(--gold) 0%, #cc9900 100%);
     color: #000; 
     padding: 12px 20px; 

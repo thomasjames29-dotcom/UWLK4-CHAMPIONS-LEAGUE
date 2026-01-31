@@ -3,10 +3,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
 :root { 
-    --bg: #0a0a12;
+    --bg: #0a0a1a;
     --panel: #1a1a2e;
     --card: #16213e;
-    --accent: #ffd700;
+    --accent: #ffffff;
     --gold: #ffd700;
     --text: #ffffff;
     --text-dim: #8888aa;
@@ -18,9 +18,9 @@
     --silver: #c0c0c0;
     --special: #ff0080;
     --icon: #00ffff;
-    --retro-red: #e60000;
-    --retro-yellow: #ffcc00;
-    --retro-blue: #0066cc;
+    --retro-red: #cc0000;
+    --retro-white: #ffffff;
+    --retro-blue: #003399;
 }
 
 html, body { 
@@ -79,7 +79,8 @@ html, body {
 .btn-green { background: linear-gradient(180deg, #00cc00 0%, #008800 100%); color: #fff; }
 .btn-purple { background: linear-gradient(180deg, #cc00cc 0%, #880088 100%); }
 .btn-blue { background: linear-gradient(180deg, var(--retro-blue) 0%, #004499 100%); }
-.btn-gold { background: linear-gradient(180deg, #ffcc00 0%, #cc9900 100%); color: #000; text-shadow: none; }
+.btn-gold { background: linear-gradient(180deg, #ffd700 0%, #cc9900 100%); color: #000; text-shadow: none; }
+.btn-white { background: linear-gradient(180deg, #ffffff 0%, #cccccc 100%); color: #000; text-shadow: none; }
 .btn-sm { padding: 8px 12px; font-size: 8px; width: auto; display: inline-block; margin: 5px; }
 
 /* RETRO INPUT */
@@ -346,16 +347,16 @@ html, body {
 .game-title { 
     font-family: 'Press Start 2P', monospace;
     font-size: 28px; 
-    color: var(--gold);
-    text-shadow: 4px 4px 0 var(--retro-red), 8px 8px 0 #000;
+    color: var(--retro-red);
+    text-shadow: 4px 4px 0 var(--retro-white), 8px 8px 0 #000;
     margin: 20px 0 5px 0;
     letter-spacing: 2px;
 }
 .title-sub { 
     display: block;
     font-size: 20px;
-    color: #fff;
-    text-shadow: 3px 3px 0 var(--retro-blue), 6px 6px 0 #000;
+    color: var(--retro-blue);
+    text-shadow: 3px 3px 0 var(--retro-white), 6px 6px 0 #000;
     margin-top: 5px;
 }
 .version-tag { 
@@ -368,7 +369,7 @@ html, body {
 .tagline { 
     font-family: 'VT323', monospace;
     font-size: 20px;
-    color: var(--retro-yellow); 
+    color: var(--retro-white); 
     margin-bottom: 30px;
     animation: blink 2s ease-in-out infinite;
 }
@@ -719,7 +720,7 @@ html, body {
     font-size: 20px;
     text-align: center; 
     padding: 20px;
-    color: var(--retro-yellow);
+    color: var(--retro-white);
     background: #000;
     border: 4px solid #333;
     margin: 10px;
@@ -1092,4 +1093,175 @@ html, body {
     font-family: 'VT323', monospace;
     font-size: 16px;
     color: #fff;
+}
+
+/* PACK INCUBATOR SYSTEM */
+.pack-btn {
+    position: absolute;
+    top: 130px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, var(--retro-blue) 0%, #001a66 100%);
+    border: 4px solid #000;
+    box-shadow: 4px 4px 0 #000;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+}
+.pack-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #000; }
+
+.incubator-display {
+    position: absolute;
+    bottom: 80px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.incubator-slot {
+    background: rgba(0, 0, 0, 0.85);
+    border: 3px solid #333;
+    border-radius: 8px;
+    padding: 10px;
+    min-width: 120px;
+    text-align: center;
+    cursor: pointer;
+}
+.incubator-slot.empty {
+    border-style: dashed;
+    opacity: 0.7;
+}
+.incubator-slot.active {
+    border-width: 4px;
+}
+.incubator-icon {
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+.incubator-label, .incubator-name {
+    font-family: 'VT323', monospace;
+    font-size: 14px;
+    color: #888;
+}
+.incubator-name { color: #fff; }
+.incubator-progress {
+    height: 8px;
+    background: #222;
+    border-radius: 4px;
+    margin: 8px 0;
+    overflow: hidden;
+}
+.incubator-progress .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+.incubator-dist {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: #0f0;
+}
+
+/* PACK MANAGER MODAL */
+.pack-manager-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+.pack-manager-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.pack-manager-header h2 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px;
+    color: var(--retro-red);
+    margin: 0;
+}
+.pack-manager-close {
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.pack-incubators {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #111;
+    border: 3px solid var(--retro-blue);
+    border-radius: 8px;
+}
+.pack-incubator-slot {
+    flex: 1;
+    max-width: 150px;
+    background: #1a1a2e;
+    border: 3px solid #333;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+}
+.pack-incubator-slot.active { border-color: var(--green); }
+
+.pack-storage-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    color: #fff;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.pack-storage-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.pack-storage-item {
+    background: #1a1a2e;
+    border: 3px solid #333;
+    border-radius: 8px;
+    padding: 15px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+.pack-storage-item:hover {
+    transform: scale(1.05);
+    border-color: #fff;
+}
+.pack-storage-icon {
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+.pack-storage-name {
+    font-family: 'VT323', monospace;
+    font-size: 14px;
+    color: #fff;
+}
+.pack-storage-dist {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: #888;
+    margin-top: 5px;
+}
+.pack-storage-empty {
+    background: #111;
+    border-style: dashed;
+    opacity: 0.5;
 }

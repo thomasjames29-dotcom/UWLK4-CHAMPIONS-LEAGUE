@@ -72,9 +72,17 @@ const SVGS = {
 };
 const TRAITS = ["Speedster", "Wall", "Sniper", "Engine", "Maestro", "Tank", "Hawk", "Shadow"];
 
+const PACK_TIERS = {
+    bronze: { name: 'Bronze Pack', distance: 500, color: '#cd7f32', players: 1, rarities: ['bronze'], icon: '🥉' },
+    silver: { name: 'Silver Pack', distance: 1000, color: '#c0c0c0', players: 1, rarities: ['bronze', 'silver'], icon: '🥈' },
+    gold: { name: 'Gold Pack', distance: 1500, color: '#ffd700', players: 2, rarities: ['silver', 'gold'], icon: '🥇' },
+    premium: { name: 'Premium Pack', distance: 2000, color: '#ff6600', players: 2, rarities: ['gold', 'special'], icon: '💎' },
+    ultimate: { name: 'Ultimate Pack', distance: 2500, color: '#ff00ff', players: 3, rarities: ['gold', 'special', 'icon'], icon: '⭐' }
+};
+
 const defaultState = { 
     user: null, 
-    club: { name:"MY CLUB", coins:1000, fans:0, inv:{agents:0, scouts:0, dyes:['red','blue','green','gold'], patterns:[0], packs: []} }, 
+    club: { name:"MY CLUB", coins:1000, fans:0, inv:{agents:0, scouts:0, dyes:['red','blue','green','gold'], patterns:[0]} }, 
     manager: { 
         look: { skin: 'skin_1', hair: 'hair_short', hairColor: 0, shirt: 'shirt_polo', pants: 'pants_dress', shoes: 'shoes_dress', accessory: 'acc_none' },
         stats: { dist:0, contracts:0, wins:0, fans:0, matches:0, collects:0, sbcs:0, packsOpened:0 }, 
@@ -84,6 +92,8 @@ const defaultState = {
     wardrobe: {
         unlocked: ['hair_short', 'shirt_polo', 'pants_dress', 'shoes_dress', 'acc_none', 'skin_1', 'skin_2', 'skin_3', 'skin_4']
     },
+    packStorage: [],
+    activeIncubators: [null, null],
     squad: [], 
     lineup: { GK: null, DEF1: null, DEF2: null, DEF3: null, DEF4: null, MID1: null, MID2: null, MID3: null, FWD1: null, FWD2: null, FWD3: null },
     active: [null, null], 
@@ -172,6 +182,12 @@ function loadGame() {
         }
         if (!state.manager.look || typeof state.manager.look !== 'object') {
             state.manager.look = { skin: 'skin_1', hair: 'hair_short', hairColor: 0, shirt: 'shirt_polo', pants: 'pants_dress', shoes: 'shoes_dress', accessory: 'acc_none' };
+        }
+        if (!Array.isArray(state.packStorage)) {
+            state.packStorage = [];
+        }
+        if (!Array.isArray(state.activeIncubators)) {
+            state.activeIncubators = [null, null];
         }
     } catch(e){ console.error('Load error:', e); } 
 }
@@ -342,9 +358,21 @@ function interact(i){
             }
             playAudio('ui');
         } else if(i.type==='PACK') {
-            const packPlayer = typeof generatePackPlayer === 'function' ? generatePackPlayer() : generateLocalPlayer();
-            startPackSequence([packPlayer]);
-            playAudio('pack');
+            const tiers = ['bronze', 'silver', 'gold', 'premium', 'ultimate'];
+            const weights = [35, 30, 20, 10, 5];
+            const roll = Math.random() * 100;
+            let cumulative = 0;
+            let selectedTier = 'bronze';
+            for (let j = 0; j < tiers.length; j++) {
+                cumulative += weights[j];
+                if (roll < cumulative) {
+                    selectedTier = tiers[j];
+                    break;
+                }
+            }
+            if (addPackToStorage(selectedTier)) {
+                playAudio('pack');
+            }
         } else if(i.type==='BOX') { 
             const x=state.active.findIndex(s=>s===null); 
             if(x!==-1){
@@ -386,6 +414,115 @@ function advanceContracts(d){
             if(c.progress>=c.required) finishContract(i);
         }
     });
+    advanceIncubators(d);
+}
+
+function advanceIncubators(d) {
+    state.activeIncubators.forEach((inc, i) => {
+        if (inc) {
+            inc.walked += d;
+            if (inc.walked >= inc.distance) {
+                hatchPack(i);
+            }
+        }
+    });
+    updateIncubatorUI();
+}
+
+function hatchPack(slotIndex) {
+    const inc = state.activeIncubators[slotIndex];
+    if (!inc) return;
+    
+    const tier = PACK_TIERS[inc.tier];
+    const players = [];
+    
+    for (let i = 0; i < tier.players; i++) {
+        const rarity = tier.rarities[Math.floor(Math.random() * tier.rarities.length)];
+        if (typeof generatePackPlayer === 'function') {
+            players.push(generatePackPlayer(rarity));
+        } else {
+            players.push(generateLocalPlayer(rarity));
+        }
+    }
+    
+    state.activeIncubators[slotIndex] = null;
+    state.manager.stats.packsOpened++;
+    updateObjectives('packs', 1);
+    saveGame();
+    
+    showToast(`${tier.icon} ${tier.name} hatched!`);
+    playAudio('pack');
+    startPackSequence(players);
+    checkWardrobeUnlocks();
+}
+
+function addPackToStorage(tier) {
+    if (state.packStorage.length >= 8) {
+        showToast("Pack storage full! (8/8)");
+        return false;
+    }
+    
+    const pack = {
+        id: Math.floor(Date.now() + Math.random() * 10000),
+        tier: tier,
+        obtainedAt: Date.now()
+    };
+    
+    state.packStorage.push(pack);
+    saveGame();
+    updateIncubatorUI();
+    showToast(`${PACK_TIERS[tier].icon} ${PACK_TIERS[tier].name} added to storage!`);
+    return true;
+}
+
+function equipPackToIncubator(packId) {
+    const packIndex = state.packStorage.findIndex(p => p.id === packId);
+    if (packIndex === -1) return;
+    
+    const emptySlot = state.activeIncubators.findIndex(s => s === null);
+    if (emptySlot === -1) {
+        showToast("Both incubator slots are full!");
+        return;
+    }
+    
+    const pack = state.packStorage.splice(packIndex, 1)[0];
+    const tier = PACK_TIERS[pack.tier];
+    
+    state.activeIncubators[emptySlot] = {
+        id: pack.id,
+        tier: pack.tier,
+        distance: tier.distance,
+        walked: 0
+    };
+    
+    saveGame();
+    updateIncubatorUI();
+    showToast(`${tier.icon} Started walking ${tier.name}!`);
+}
+
+function updateIncubatorUI() {
+    const container = document.getElementById('incubator-display');
+    if (!container) return;
+    
+    container.innerHTML = state.activeIncubators.map((inc, i) => {
+        if (!inc) {
+            return `<div class="incubator-slot empty" onclick="openPackManager()">
+                <div class="incubator-icon">🥚</div>
+                <div class="incubator-label">Empty Slot ${i + 1}</div>
+            </div>`;
+        }
+        const tier = PACK_TIERS[inc.tier];
+        const progress = Math.min(100, (inc.walked / inc.distance) * 100);
+        const remaining = Math.max(0, inc.distance - inc.walked);
+        return `<div class="incubator-slot active" style="border-color: ${tier.color}">
+            <div class="incubator-icon">${tier.icon}</div>
+            <div class="incubator-name">${tier.name}</div>
+            <div class="incubator-progress">
+                <div class="progress-fill" style="width: ${progress}%; background: ${tier.color}"></div>
+            </div>
+            <div class="incubator-dist">${(remaining/1000).toFixed(2)}km left</div>
+        </div>`;
+    }).join('');
 }
 
 function finishContract(i){ 
@@ -536,7 +673,11 @@ function updateUI(){
     const divEl = document.getElementById('mgr-division');
     if(divEl) divEl.innerText = division;
     
+    const mapCoins = document.getElementById('map-coins');
+    if(mapCoins) mapCoins.innerText = formatNumber(state.club.coins);
+    
     updateStats();
+    updateIncubatorUI();
 }
 
 function updateStats() {
@@ -1800,4 +1941,74 @@ function openBag() {
 function showLogin() {
     document.getElementById('title-box').style.display = 'none';
     document.getElementById('login-box').style.display = 'block';
+}
+
+function openPackManager() {
+    const existing = document.getElementById('pack-manager-modal');
+    if (existing) existing.remove();
+    
+    const modal = document.createElement('div');
+    modal.id = 'pack-manager-modal';
+    modal.className = 'pack-manager-modal';
+    
+    const incubatorsHtml = state.activeIncubators.map((inc, i) => {
+        if (!inc) {
+            return `<div class="pack-incubator-slot empty">
+                <div class="incubator-icon">🥚</div>
+                <div class="incubator-label">Empty Slot ${i + 1}</div>
+                <div class="incubator-dist" style="color:#666">Tap a pack below</div>
+            </div>`;
+        }
+        const tier = PACK_TIERS[inc.tier];
+        const progress = Math.min(100, (inc.walked / inc.distance) * 100);
+        const remaining = Math.max(0, inc.distance - inc.walked);
+        return `<div class="pack-incubator-slot active" style="border-color: ${tier.color}">
+            <div class="incubator-icon">${tier.icon}</div>
+            <div class="incubator-name">${tier.name}</div>
+            <div class="incubator-progress">
+                <div class="progress-fill" style="width: ${progress}%; background: ${tier.color}"></div>
+            </div>
+            <div class="incubator-dist">${(remaining/1000).toFixed(2)}km left</div>
+        </div>`;
+    }).join('');
+    
+    const storageHtml = state.packStorage.length > 0 
+        ? state.packStorage.map(pack => {
+            const tier = PACK_TIERS[pack.tier];
+            return `<div class="pack-storage-item" onclick="equipPackToIncubator(${pack.id}); openPackManager();" style="border-color: ${tier.color}">
+                <div class="pack-storage-icon">${tier.icon}</div>
+                <div class="pack-storage-name">${tier.name}</div>
+                <div class="pack-storage-dist">${(tier.distance/1000).toFixed(1)}km</div>
+            </div>`;
+        }).join('')
+        : '<div class="pack-storage-item pack-storage-empty"><div class="pack-storage-icon">📭</div><div class="pack-storage-name">No Packs</div></div>';
+    
+    const emptySlots = 8 - state.packStorage.length;
+    const emptySlotsHtml = Array(Math.max(0, emptySlots)).fill('<div class="pack-storage-item pack-storage-empty"></div>').join('');
+    
+    modal.innerHTML = `
+        <div class="pack-manager-header">
+            <h2>🥚 PACK INCUBATOR</h2>
+            <button class="pack-manager-close" onclick="closePackManager()">✕</button>
+        </div>
+        <div class="pack-incubators">
+            ${incubatorsHtml}
+        </div>
+        <div class="pack-storage-title">📦 PACK STORAGE (${state.packStorage.length}/8)</div>
+        <div class="pack-storage-grid">
+            ${storageHtml}
+            ${emptySlotsHtml}
+        </div>
+        <p style="text-align: center; font-family: 'VT323', monospace; color: #888; margin-top: 20px;">
+            Find packs at places of interest while exploring!<br>
+            Walk to hatch them and collect player cards.
+        </p>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function closePackManager() {
+    const modal = document.getElementById('pack-manager-modal');
+    if (modal) modal.remove();
 }

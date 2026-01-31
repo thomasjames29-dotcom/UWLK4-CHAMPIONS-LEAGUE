@@ -17,7 +17,7 @@ Create a game that rivals Pokemon GO by leveraging football's global popularity,
 - January 31, 2026: Major UI overhaul with retro FIFA 98 aesthetic
   - Pixelated fonts (Press Start 2P, VT323)
   - Scanline CRT effects
-  - Bold red/yellow/blue color scheme
+  - Red/white/blue color scheme (patriotic theme)
   - Block-style buttons with shadows
 - Added full manager customization system with wardrobe
   - Hairstyles, shirts, pants, shoes, accessories
@@ -25,6 +25,12 @@ Create a game that rivals Pokemon GO by leveraging football's global popularity,
   - Hair color selection
   - Items unlock through gameplay achievements or world discovery
 - Wardrobe items spawn in the world as discoverable collectibles
+- NEW: Pack Incubator System (Pokemon GO egg-style):
+  - 5 pack tiers: Bronze (500m), Silver (1km), Gold (1.5km), Premium (2km), Ultimate (2.5km)
+  - 2 active incubator slots for walking packs
+  - 8-slot pack storage for collected packs
+  - Packs found at places of interest while exploring
+  - Walk to hatch packs and reveal player cards
 - Fixed JavaScript errors with saved state compatibility
 
 ## Architecture

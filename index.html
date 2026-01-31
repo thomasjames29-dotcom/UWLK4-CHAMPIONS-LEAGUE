@@ -53,7 +53,7 @@
         </div>
         
         <div class="login-box" id="login-box">
-            <h2 style="color:gold;">CREATE MANAGER</h2>
+            <h2 style="color:#cc0000;">CREATE MANAGER</h2>
             <input type="text" id="inp-name" class="input-field" placeholder="ENTER YOUR NAME" maxlength="15">
             <button class="btn btn-green" onclick="createAccount()">START CAREER</button>
             <button class="btn btn-red" onclick="backToTitle()">CANCEL</button>
@@ -65,10 +65,12 @@
         <div class="map-overlay"></div>
         <button class="store-btn" onclick="openBag()">🛒</button>
         <button id="gps-btn" class="map-btn" onclick="recenterMap()">🎯</button>
+        <button class="pack-btn" onclick="openPackManager()">🥚</button>
         <div class="map-stats">
             <div class="stat-pill">💰 <span id="map-coins">0</span></div>
             <div class="stat-pill">⭐ LV <span id="map-level">1</span></div>
         </div>
+        <div id="incubator-display" class="incubator-display"></div>
     </div>
 
     <div id="view-squad" class="view-container full-panel">

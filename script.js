@@ -790,11 +790,14 @@ function switchView(v){
     pulse(10); 
 }
 
+let toastTimeout = null;
 function showToast(m){ 
     const t=document.getElementById('game-toast'); 
     t.innerText=m; 
-    t.classList.add('show'); 
-    setTimeout(()=>t.classList.remove('show'),3000); 
+    t.classList.remove('show');
+    if (toastTimeout) clearTimeout(toastTimeout);
+    setTimeout(() => t.classList.add('show'), 10);
+    toastTimeout = setTimeout(()=>t.classList.remove('show'), 3000); 
 }
 
 function updateUI(){ 

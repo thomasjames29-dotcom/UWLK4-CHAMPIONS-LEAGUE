@@ -1373,7 +1373,12 @@ function showCard(uniqueId){
     document.getElementById('modal-overlay').style.display = 'flex';
 }
 
-function closeModal(){ document.getElementById('modal-overlay').style.display='none'; }
+function closeModal(){ 
+    const overlay = document.getElementById('modal-overlay');
+    if (overlay) overlay.style.display='none';
+    const wardrobe = document.getElementById('wardrobe-modal');
+    if (wardrobe) wardrobe.remove();
+}
 
 function getCardHTML(p, isFirst = true){ 
     return `<div class="full-player-card card-${p.rarity} ${isFirst ? 'reveal-animation' : ''}">

@@ -73,11 +73,11 @@ const SVGS = {
 const TRAITS = ["Speedster", "Wall", "Sniper", "Engine", "Maestro", "Tank", "Hawk", "Shadow"];
 
 const PACK_TIERS = {
-    bronze: { name: 'Bronze Pack', distance: 500, color: '#cd7f32', players: 1, rarities: ['bronze'], icon: '🥉' },
-    silver: { name: 'Silver Pack', distance: 1000, color: '#c0c0c0', players: 1, rarities: ['bronze', 'silver'], icon: '🥈' },
-    gold: { name: 'Gold Pack', distance: 1500, color: '#ffd700', players: 2, rarities: ['silver', 'gold'], icon: '🥇' },
-    premium: { name: 'Premium Pack', distance: 2000, color: '#ff6600', players: 2, rarities: ['gold', 'special'], icon: '💎' },
-    ultimate: { name: 'Ultimate Pack', distance: 2500, color: '#ff00ff', players: 3, rarities: ['gold', 'special', 'icon'], icon: '⭐' }
+    bronze: { name: 'Bronze Pack', distance: 500, color: '#cd7f32', players: 1, rarities: ['bronze'], icon: '🟤' },
+    silver: { name: 'Silver Pack', distance: 1000, color: '#c0c0c0', players: 1, rarities: ['bronze', 'silver'], icon: '⬜' },
+    gold: { name: 'Gold Pack', distance: 1500, color: '#ffd700', players: 2, rarities: ['silver', 'gold'], icon: '🟨' },
+    premium: { name: 'Premium Pack', distance: 2000, color: '#ff6600', players: 2, rarities: ['gold', 'special'], icon: '🟧' },
+    ultimate: { name: 'Ultimate Pack', distance: 2500, color: '#ff00ff', players: 3, rarities: ['gold', 'special', 'icon'], icon: '🟪' }
 };
 
 const defaultState = { 
@@ -507,7 +507,7 @@ function updateIncubatorUI() {
     container.innerHTML = state.activeIncubators.map((inc, i) => {
         if (!inc) {
             return `<div class="incubator-slot empty" onclick="openPackManager()">
-                <div class="incubator-icon">🥚</div>
+                <div class="incubator-icon">📦</div>
                 <div class="incubator-label">Empty Slot ${i + 1}</div>
             </div>`;
         }
@@ -2051,7 +2051,7 @@ function openPackManager() {
     const incubatorsHtml = state.activeIncubators.map((inc, i) => {
         if (!inc) {
             return `<div class="pack-incubator-slot empty">
-                <div class="incubator-icon">🥚</div>
+                <div class="incubator-icon">📦</div>
                 <div class="incubator-label">Empty Slot ${i + 1}</div>
                 <div class="incubator-dist" style="color:#666">Tap a pack below</div>
             </div>`;
@@ -2085,7 +2085,7 @@ function openPackManager() {
     
     modal.innerHTML = `
         <div class="pack-manager-header">
-            <h2>🥚 PACK INCUBATOR</h2>
+            <h2>📦 PACK MANAGER</h2>
             <button class="pack-manager-close" onclick="closePackManager()">✕</button>
         </div>
         <div class="pack-incubators">

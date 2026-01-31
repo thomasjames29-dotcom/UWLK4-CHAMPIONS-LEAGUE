@@ -61,7 +61,14 @@
     </div>
 
     <div id="view-map" class="view-container">
-        <div id="map-container"><div id="map"></div></div>
+        <div id="map-container">
+            <div id="map"></div>
+            <div class="radar-sweep"></div>
+            <div class="map-corner top-left"></div>
+            <div class="map-corner top-right"></div>
+            <div class="map-corner bottom-left"></div>
+            <div class="map-corner bottom-right"></div>
+        </div>
         <div class="map-overlay"></div>
         <button class="store-btn" onclick="openBag()">🛒</button>
         <button id="gps-btn" class="map-btn" onclick="recenterMap()">🎯</button>

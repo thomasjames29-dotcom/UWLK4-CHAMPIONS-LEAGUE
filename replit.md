@@ -31,6 +31,12 @@ Create a game that rivals Pokemon GO by leveraging football's global popularity,
   - Top players from Ligue 1 (PSG, Monaco, Lille, Marseille)
   - 30+ Icon legends (Pele, Maradona, Zidane, Ronaldinho, etc.)
   - 15+ Special cards (TOTW, TOTS, TOTY, Featured, POTM variants)
+- January 31, 2026: FIFA 98 retro world map enhancements
+  - CRT scanline overlay on the map
+  - Green screen glow effect around edges
+  - Gold corner brackets (FIFA 98 style framing)
+  - Animated radar sweep in map center
+  - Pixelated/sepia map tile filters
 - January 31, 2026: Pack Incubator System (Pokemon GO egg-style)
 - January 31, 2026: Manager customization with wardrobe items
 - January 31, 2026: Retro FIFA 98 aesthetic with CRT scanlines

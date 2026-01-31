@@ -182,22 +182,90 @@ function getPlayerImageUrl(player) {
 }
 
 const ACHIEVEMENTS = [ 
+    // Walking Achievements
     {id:1, t:"Baby Steps", d:"Walk 1km", type:'dist', val:1000, r:"500 Coins"}, 
     {id:2, t:"Jogger", d:"Walk 5km", type:'dist', val:5000, r:"2000 Coins"}, 
-    {id:3, t:"Marathon", d:"Walk 42km", type:'dist', val:42000, r:"Premium Pack"}, 
-    {id:4, t:"Globetrotter", d:"Walk 100km", type:'dist', val:100000, r:"Ultimate Pack"}, 
-    {id:5, t:"Scout", d:"Complete 5 Contracts", type:'con', val:5, r:"1000 Coins"}, 
-    {id:6, t:"Agent", d:"Complete 20 Contracts", type:'con', val:20, r:"5000 Coins"}, 
-    {id:7, t:"Headhunter", d:"Complete 50 Contracts", type:'con', val:50, r:"Mega Pack"}, 
-    {id:8, t:"Winner", d:"Win 1 Match", type:'win', val:1, r:"500 Coins"}, 
-    {id:9, t:"Champion", d:"Win 10 Matches", type:'win', val:10, r:"5000 Coins"}, 
-    {id:10, t:"Dynasty", d:"Win 50 Matches", type:'win', val:50, r:"Icon Pack"}, 
-    {id:11, t:"Fan Favorite", d:"Reach 100 Fans", type:'fan', val:100, r:"1000 Coins"}, 
-    {id:12, t:"Cult Hero", d:"Reach 1000 Fans", type:'fan', val:1000, r:"Rare Mega Pack"},
-    {id:13, t:"Collector", d:"Own 25 Players", type:'squad', val:25, r:"2500 Coins"},
-    {id:14, t:"Squad Builder", d:"Own 50 Players", type:'squad', val:50, r:"Mega Pack"},
-    {id:15, t:"SBC Rookie", d:"Complete 1 SBC", type:'sbc', val:1, r:"1000 Coins"},
-    {id:16, t:"SBC Expert", d:"Complete 10 SBCs", type:'sbc', val:10, r:"Ultimate Pack"}
+    {id:3, t:"Runner", d:"Walk 10km", type:'dist', val:10000, r:"Gold Pack"}, 
+    {id:4, t:"Half Marathon", d:"Walk 21km", type:'dist', val:21000, r:"Premium Pack"}, 
+    {id:5, t:"Marathon", d:"Walk 42km", type:'dist', val:42000, r:"Rare Players Pack"}, 
+    {id:6, t:"Ultra Runner", d:"Walk 75km", type:'dist', val:75000, r:"Mega Pack"}, 
+    {id:7, t:"Globetrotter", d:"Walk 100km", type:'dist', val:100000, r:"Ultimate Pack"}, 
+    {id:8, t:"World Walker", d:"Walk 250km", type:'dist', val:250000, r:"Icon Pack"}, 
+    
+    // Contract Achievements
+    {id:10, t:"Scout", d:"Complete 5 Contracts", type:'con', val:5, r:"1000 Coins"}, 
+    {id:11, t:"Talent Spotter", d:"Complete 10 Contracts", type:'con', val:10, r:"2500 Coins"}, 
+    {id:12, t:"Agent", d:"Complete 20 Contracts", type:'con', val:20, r:"5000 Coins"}, 
+    {id:13, t:"Super Agent", d:"Complete 35 Contracts", type:'con', val:35, r:"Premium Pack"}, 
+    {id:14, t:"Headhunter", d:"Complete 50 Contracts", type:'con', val:50, r:"Mega Pack"}, 
+    {id:15, t:"Transfer King", d:"Complete 100 Contracts", type:'con', val:100, r:"Ultimate Pack"}, 
+    
+    // Match Achievements
+    {id:20, t:"First Victory", d:"Win 1 Match", type:'win', val:1, r:"500 Coins"}, 
+    {id:21, t:"Winner", d:"Win 5 Matches", type:'win', val:5, r:"1500 Coins"}, 
+    {id:22, t:"Competitor", d:"Win 10 Matches", type:'win', val:10, r:"3000 Coins"}, 
+    {id:23, t:"Champion", d:"Win 25 Matches", type:'win', val:25, r:"Premium Pack"}, 
+    {id:24, t:"Legend", d:"Win 50 Matches", type:'win', val:50, r:"Mega Pack"}, 
+    {id:25, t:"Dynasty", d:"Win 100 Matches", type:'win', val:100, r:"Icon Pack"}, 
+    {id:26, t:"Match Player", d:"Play 10 Matches", type:'matches', val:10, r:"1000 Coins"}, 
+    {id:27, t:"Veteran", d:"Play 50 Matches", type:'matches', val:50, r:"5000 Coins"}, 
+    {id:28, t:"Season Ticket", d:"Play 100 Matches", type:'matches', val:100, r:"Ultimate Pack"}, 
+    
+    // Fan Achievements
+    {id:30, t:"New Face", d:"Reach 50 Fans", type:'fan', val:50, r:"500 Coins"}, 
+    {id:31, t:"Fan Favorite", d:"Reach 100 Fans", type:'fan', val:100, r:"1000 Coins"}, 
+    {id:32, t:"Local Hero", d:"Reach 500 Fans", type:'fan', val:500, r:"2500 Coins"}, 
+    {id:33, t:"Cult Hero", d:"Reach 1000 Fans", type:'fan', val:1000, r:"Rare Mega Pack"},
+    {id:34, t:"Superstar", d:"Reach 5000 Fans", type:'fan', val:5000, r:"Ultimate Pack"},
+    {id:35, t:"Icon Status", d:"Reach 10000 Fans", type:'fan', val:10000, r:"Icon Pack"},
+    
+    // Squad Achievements
+    {id:40, t:"First Signing", d:"Own 5 Players", type:'squad', val:5, r:"500 Coins"},
+    {id:41, t:"Squad Starter", d:"Own 11 Players", type:'squad', val:11, r:"1000 Coins"},
+    {id:42, t:"Collector", d:"Own 25 Players", type:'squad', val:25, r:"2500 Coins"},
+    {id:43, t:"Squad Builder", d:"Own 50 Players", type:'squad', val:50, r:"Mega Pack"},
+    {id:44, t:"Hoarder", d:"Own 100 Players", type:'squad', val:100, r:"Ultimate Pack"},
+    {id:45, t:"Transfer Guru", d:"Own 200 Players", type:'squad', val:200, r:"Icon Pack"},
+    
+    // SBC Achievements
+    {id:50, t:"SBC Beginner", d:"Complete 1 SBC", type:'sbc', val:1, r:"1000 Coins"},
+    {id:51, t:"SBC Regular", d:"Complete 5 SBCs", type:'sbc', val:5, r:"3000 Coins"},
+    {id:52, t:"SBC Expert", d:"Complete 10 SBCs", type:'sbc', val:10, r:"Premium Pack"},
+    {id:53, t:"SBC Master", d:"Complete 25 SBCs", type:'sbc', val:25, r:"Ultimate Pack"},
+    {id:54, t:"SBC Legend", d:"Complete 50 SBCs", type:'sbc', val:50, r:"Icon Pack"},
+    
+    // Pack Achievements
+    {id:60, t:"First Unboxing", d:"Open 1 Pack", type:'packs', val:1, r:"250 Coins"},
+    {id:61, t:"Pack Opener", d:"Open 10 Packs", type:'packs', val:10, r:"1500 Coins"},
+    {id:62, t:"Pack Addict", d:"Open 25 Packs", type:'packs', val:25, r:"Gold Pack"},
+    {id:63, t:"Pack Maniac", d:"Open 50 Packs", type:'packs', val:50, r:"Premium Pack"},
+    {id:64, t:"Pack Master", d:"Open 100 Packs", type:'packs', val:100, r:"Ultimate Pack"},
+    
+    // Division Achievements
+    {id:70, t:"Division 9", d:"Reach Division 9", type:'div', val:9, r:"1000 Coins"},
+    {id:71, t:"Division 7", d:"Reach Division 7", type:'div', val:7, r:"3000 Coins"},
+    {id:72, t:"Division 5", d:"Reach Division 5", type:'div', val:5, r:"Premium Pack"},
+    {id:73, t:"Division 3", d:"Reach Division 3", type:'div', val:3, r:"Mega Pack"},
+    {id:74, t:"Division 1", d:"Reach Division 1", type:'div', val:1, r:"Icon Pack"},
+    
+    // Coin Achievements
+    {id:80, t:"Saver", d:"Accumulate 5K Coins", type:'coins', val:5000, r:"Bronze Pack"},
+    {id:81, t:"Investor", d:"Accumulate 25K Coins", type:'coins', val:25000, r:"Gold Pack"},
+    {id:82, t:"Rich", d:"Accumulate 100K Coins", type:'coins', val:100000, r:"Premium Pack"},
+    {id:83, t:"Wealthy", d:"Accumulate 500K Coins", type:'coins', val:500000, r:"Mega Pack"},
+    {id:84, t:"Millionaire", d:"Accumulate 1M Coins", type:'coins', val:1000000, r:"Ultimate Pack"},
+    
+    // Rating Achievements
+    {id:90, t:"Team Building", d:"Team OVR 70+", type:'ovr', val:70, r:"2000 Coins"},
+    {id:91, t:"Competitive", d:"Team OVR 80+", type:'ovr', val:80, r:"5000 Coins"},
+    {id:92, t:"Elite Squad", d:"Team OVR 85+", type:'ovr', val:85, r:"Premium Pack"},
+    {id:93, t:"World Class", d:"Team OVR 90+", type:'ovr', val:90, r:"Ultimate Pack"},
+    
+    // Special Card Achievements
+    {id:100, t:"Golden Touch", d:"Own a Gold Player", type:'rarity', val:'gold', r:"1000 Coins"},
+    {id:101, t:"Special One", d:"Own a Special Card", type:'rarity', val:'special', r:"5000 Coins"},
+    {id:102, t:"Icon Hunter", d:"Own an Icon", type:'rarity', val:'icon', r:"Mega Pack"},
+    {id:103, t:"Icon Collector", d:"Own 5 Icons", type:'rarity_count', val:5, rarity:'icon', r:"Ultimate Pack"}
 ];
 
 window.onload = function() { 
@@ -807,7 +875,12 @@ function showToast(m){
     t.classList.remove('show');
     if (toastTimeout) clearTimeout(toastTimeout);
     setTimeout(() => t.classList.add('show'), 10);
-    toastTimeout = setTimeout(()=>t.classList.remove('show'), 3000); 
+    toastTimeout = setTimeout(()=>t.classList.remove('show'), 4000); 
+}
+function dismissToast() {
+    const t=document.getElementById('game-toast');
+    t.classList.remove('show');
+    if (toastTimeout) clearTimeout(toastTimeout);
 }
 
 function updateUI(){ 
@@ -1487,6 +1560,9 @@ function getCardHTML(p, isFirst = true){
 }
 
 function checkAchievements() {
+    const division = getDivisionFromRating(state.manager.rating);
+    const teamOvr = calculateTeamOVR();
+    
     ACHIEVEMENTS.forEach(ach => {
         if (state.achievements.includes(ach.id)) return;
         
@@ -1496,11 +1572,18 @@ function checkAchievements() {
         if (ach.type === 'win' && state.manager.stats.wins >= ach.val) achieved = true;
         if (ach.type === 'fan' && state.club.fans >= ach.val) achieved = true;
         if (ach.type === 'squad' && state.squad.length >= ach.val) achieved = true;
-        if (ach.type === 'sbc' && state.manager.stats.sbcs >= ach.val) achieved = true;
+        if (ach.type === 'sbc' && (state.manager.stats.sbcs || 0) >= ach.val) achieved = true;
+        if (ach.type === 'matches' && (state.manager.stats.matches || 0) >= ach.val) achieved = true;
+        if (ach.type === 'packs' && (state.manager.stats.packsOpened || 0) >= ach.val) achieved = true;
+        if (ach.type === 'div' && division <= ach.val) achieved = true;
+        if (ach.type === 'coins' && state.club.coins >= ach.val) achieved = true;
+        if (ach.type === 'ovr' && teamOvr >= ach.val) achieved = true;
+        if (ach.type === 'rarity' && state.squad.some(p => p.rarity === ach.val)) achieved = true;
+        if (ach.type === 'rarity_count' && state.squad.filter(p => p.rarity === ach.rarity).length >= ach.val) achieved = true;
         
         if (achieved) {
             state.achievements.push(ach.id);
-            showToast(`Achievement: ${ach.t}!`);
+            showToast(`🏆 Achievement: ${ach.t}!`);
             playAudio('goal');
             saveGame();
         }
@@ -1986,6 +2069,8 @@ function submitSBC() {
     sbcSubmission = [];
 }
 
+let currentAchFilter = 'all';
+
 function renderObjectivesView() {
     const dailyContainer = document.getElementById('daily-objectives');
     const weeklyContainer = document.getElementById('weekly-objectives');
@@ -2031,6 +2116,88 @@ function renderObjectivesView() {
             </div>
         `).join('');
     }
+    
+    renderAchievements();
+}
+
+function filterAchievements(filter, btn) {
+    currentAchFilter = filter;
+    document.querySelectorAll('.ach-filter').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    renderAchievements();
+}
+
+function getAchievementProgress(ach) {
+    const division = getDivisionFromRating(state.manager.rating);
+    const teamOvr = calculateTeamOVR();
+    
+    switch(ach.type) {
+        case 'dist': return { current: state.manager.stats.dist, target: ach.val, display: `${(state.manager.stats.dist/1000).toFixed(1)}km / ${(ach.val/1000)}km` };
+        case 'con': return { current: state.manager.stats.contracts, target: ach.val, display: `${state.manager.stats.contracts} / ${ach.val}` };
+        case 'win': return { current: state.manager.stats.wins, target: ach.val, display: `${state.manager.stats.wins} / ${ach.val}` };
+        case 'fan': return { current: state.club.fans, target: ach.val, display: `${state.club.fans} / ${ach.val}` };
+        case 'squad': return { current: state.squad.length, target: ach.val, display: `${state.squad.length} / ${ach.val}` };
+        case 'sbc': return { current: state.manager.stats.sbcs || 0, target: ach.val, display: `${state.manager.stats.sbcs || 0} / ${ach.val}` };
+        case 'matches': return { current: state.manager.stats.matches || 0, target: ach.val, display: `${state.manager.stats.matches || 0} / ${ach.val}` };
+        case 'packs': return { current: state.manager.stats.packsOpened || 0, target: ach.val, display: `${state.manager.stats.packsOpened || 0} / ${ach.val}` };
+        case 'div': return { current: 11 - division, target: 11 - ach.val, display: `Div ${division}` };
+        case 'coins': return { current: state.club.coins, target: ach.val, display: `${formatNumber(state.club.coins)} / ${formatNumber(ach.val)}` };
+        case 'ovr': return { current: teamOvr, target: ach.val, display: `OVR ${teamOvr} / ${ach.val}` };
+        case 'rarity': return { current: state.squad.some(p => p.rarity === ach.val) ? 1 : 0, target: 1, display: state.squad.some(p => p.rarity === ach.val) ? 'Owned!' : 'Not owned' };
+        case 'rarity_count': return { current: state.squad.filter(p => p.rarity === ach.rarity).length, target: ach.val, display: `${state.squad.filter(p => p.rarity === ach.rarity).length} / ${ach.val}` };
+        default: return { current: 0, target: 1, display: '0 / 1' };
+    }
+}
+
+function getAchCategory(ach) {
+    if (['dist'].includes(ach.type)) return 'walking';
+    if (['win', 'matches'].includes(ach.type)) return 'matches';
+    if (['squad', 'rarity', 'rarity_count', 'ovr'].includes(ach.type)) return 'squad';
+    return 'misc';
+}
+
+function renderAchievements() {
+    const container = document.getElementById('achievements-list');
+    const countEl = document.getElementById('ach-count');
+    const totalEl = document.getElementById('ach-total');
+    if (!container) return;
+    
+    let filtered = ACHIEVEMENTS;
+    if (currentAchFilter !== 'all') {
+        filtered = ACHIEVEMENTS.filter(ach => getAchCategory(ach) === currentAchFilter);
+    }
+    
+    const completed = state.achievements || [];
+    if (countEl) countEl.innerText = completed.length;
+    if (totalEl) totalEl.innerText = ACHIEVEMENTS.length;
+    
+    const sorted = [...filtered].sort((a, b) => {
+        const aComplete = completed.includes(a.id);
+        const bComplete = completed.includes(b.id);
+        if (aComplete !== bComplete) return aComplete ? 1 : -1;
+        const aProgress = getAchievementProgress(a);
+        const bProgress = getAchievementProgress(b);
+        return (bProgress.current / bProgress.target) - (aProgress.current / aProgress.target);
+    });
+    
+    container.innerHTML = sorted.map(ach => {
+        const isComplete = completed.includes(ach.id);
+        const prog = getAchievementProgress(ach);
+        const pct = Math.min(100, (prog.current / prog.target) * 100);
+        
+        return `<div class="ach-item ${isComplete ? 'completed' : ''}">
+            <div class="ach-icon">${isComplete ? '✅' : '🔒'}</div>
+            <div class="ach-info">
+                <div class="ach-title">${ach.t}</div>
+                <div class="ach-desc">${ach.d}</div>
+                <div class="ach-progress-bar">
+                    <div class="ach-progress-fill" style="width: ${pct}%"></div>
+                </div>
+                <div class="ach-progress-text">${prog.display}</div>
+            </div>
+            <div class="ach-reward">${ach.r}</div>
+        </div>`;
+    }).join('');
 }
 
 function updateObjectives(type, amount) {

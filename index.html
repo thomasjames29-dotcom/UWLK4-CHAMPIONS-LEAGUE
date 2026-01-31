@@ -15,7 +15,7 @@
 </head>
 <body class="crt">
 
-    <div id="game-toast">NOTIFICATION</div>
+    <div id="game-toast" onclick="dismissToast()">NOTIFICATION</div>
     <div id="gps-status" class="status-dot"></div>
 
     <div id="pack-overlay" class="pack-overlay" style="display:none;" onclick="revealPack()">
@@ -155,12 +155,23 @@
             <h2>OBJECTIVES</h2>
         </div>
         <div class="objectives-section">
-            <h3>DAILY</h3>
+            <h3>📅 DAILY</h3>
             <div id="daily-objectives" class="objectives-list"></div>
         </div>
         <div class="objectives-section">
-            <h3>WEEKLY</h3>
+            <h3>📆 WEEKLY</h3>
             <div id="weekly-objectives" class="objectives-list"></div>
+        </div>
+        <div class="objectives-section achievements-section">
+            <h3>🏆 ACHIEVEMENTS (<span id="ach-count">0</span>/<span id="ach-total">0</span>)</h3>
+            <div class="ach-filter-bar">
+                <button class="ach-filter active" onclick="filterAchievements('all', this)">ALL</button>
+                <button class="ach-filter" onclick="filterAchievements('walking', this)">WALKING</button>
+                <button class="ach-filter" onclick="filterAchievements('matches', this)">MATCHES</button>
+                <button class="ach-filter" onclick="filterAchievements('squad', this)">SQUAD</button>
+                <button class="ach-filter" onclick="filterAchievements('misc', this)">MISC</button>
+            </div>
+            <div id="achievements-list" class="achievements-list"></div>
         </div>
     </div>
 
@@ -202,11 +213,6 @@
             <button class="btn" onclick="renameClub()">✏️ RENAME CLUB</button>
         </div>
         
-        <div class="dev-section">
-            <h4 style="color:#666;">DEV TOOLS</h4>
-            <button class="btn btn-sm" onclick="addDevPack()">🎁 FREE PACK</button>
-            <button class="btn btn-sm" onclick="addDevCoins()">💰 +10K COINS</button>
-        </div>
     </div>
 
     <div id="view-mgr" class="view-container full-panel">
